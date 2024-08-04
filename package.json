@@ -1,0 +1,21 @@
+{
+  "name": "simple-digital",
+  "author": "MainFrame",
+  "version": "2.0.0",
+  "keywords": ["pebble-app"],
+  "private": true,
+  "dependencies": {},
+  "pebble": {
+    "displayName": "simple-digital",
+    "uuid": "cb71373f-404b-4b23-81ac-45c1ef16c8e7",
+    "projectType": "rocky",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "watchapp": {
+      "watchface": true
+    },
+    "resources": {
+      "media": []
+    }
+  }
+}

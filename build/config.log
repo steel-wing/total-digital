@@ -1,0 +1,62 @@
+# project  configured on Wed Jul 24 20:24:34 2024 by
+# waf 1.7.11 (abi 98, python 20712f0 on linux2)
+# using /home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/waf configure
+#
+----------------------------------------
+Setting top to
+/home/rebble/Documents/simple-digital
+----------------------------------------
+Setting out to
+/home/rebble/Documents/simple-digital/build
+----------------------------------------
+Checking for program webpack
+/home/rebble/.pebble-sdk/SDKs/current/node_modules/.bin/webpack
+find program=['webpack'] paths=['/home/rebble/.pebble-sdk/SDKs/current/node_modules/.bin'] var='WEBPACK' -> '/home/rebble/.pebble-sdk/SDKs/current/node_modules/.bin/webpack'
+----------------------------------------
+Checking for program node,nodejs
+/usr/bin/node
+find program=['node', 'nodejs'] paths=['/home/rebble/pebble-dev/pebble-sdk-4.6-rc2-linux64/arm-cs-tools/bin', '/home/rebble/pebble-dev/pebble-sdk-4.6-rc2-linux64/bin', '/home/rebble/pebble-dev/pebble-sdk-4.6-rc2-linux64/bin', '/home/rebble/.local/bin', '/home/rebble/pebble-dev/pebble-sdk-4.6-rc2-linux64/bin', '/home/rebble/.local/bin', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin', '/snap/bin'] var='NODE' -> '/usr/bin/node'
+----------------------------------------
+Found Pebble SDK for emery in:
+/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/emery
+----------------------------------------
+Checking for program gcc,cc
+arm-none-eabi-gcc
+find program=['gcc', 'cc'] paths='' var='CC' -> 'arm-none-eabi-gcc'
+----------------------------------------
+Checking for program ar
+arm-none-eabi-ar
+find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'
+----------------------------------------
+Found Pebble SDK for diorite in:
+/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/diorite
+----------------------------------------
+Checking for program gcc,cc
+arm-none-eabi-gcc
+find program=['gcc', 'cc'] paths='' var='CC' -> 'arm-none-eabi-gcc'
+----------------------------------------
+Checking for program ar
+arm-none-eabi-ar
+find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'
+----------------------------------------
+Found Pebble SDK for chalk in:
+/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk
+----------------------------------------
+Checking for program gcc,cc
+arm-none-eabi-gcc
+find program=['gcc', 'cc'] paths='' var='CC' -> 'arm-none-eabi-gcc'
+----------------------------------------
+Checking for program ar
+arm-none-eabi-ar
+find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'
+----------------------------------------
+Found Pebble SDK for basalt in:
+/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt
+----------------------------------------
+Checking for program gcc,cc
+arm-none-eabi-gcc
+find program=['gcc', 'cc'] paths='' var='CC' -> 'arm-none-eabi-gcc'
+----------------------------------------
+Checking for program ar
+arm-none-eabi-ar
+find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'

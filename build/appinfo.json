@@ -1,0 +1,31 @@
+{
+    "versionLabel": "2.0", 
+    "projectType": "rocky", 
+    "name": "simple-digital", 
+    "messageKeys": {
+        "ControlKeyResetRequest": 1, 
+        "ControlKeyUnsupportedError": 4, 
+        "ControlKeyChunk": 3, 
+        "ControlKeyResetComplete": 2
+    }, 
+    "companyName": "MainFrame", 
+    "enableMultiJS": true, 
+    "sdkVersion": "3", 
+    "capabilities": [], 
+    "appKeys": {
+        "ControlKeyResetRequest": 1, 
+        "ControlKeyUnsupportedError": 4, 
+        "ControlKeyChunk": 3, 
+        "ControlKeyResetComplete": 2
+    }, 
+    "longName": "simple-digital", 
+    "displayName": "simple-digital", 
+    "shortName": "simple-digital", 
+    "watchapp": {
+        "watchface": true
+    }, 
+    "resources": {
+        "media": []
+    }, 
+    "uuid": "cb71373f-404b-4b23-81ac-45c1ef16c8e7"
+}
