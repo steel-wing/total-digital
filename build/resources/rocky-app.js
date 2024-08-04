@@ -76,13 +76,13 @@
 	// drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
 	var dia = 0;
-	var len = 20;
-	var hig = 20;
-	var str = 6;
-	var spa = -6;
-	var gap = 35;
+	var len = 24;
+	var hig = 56;
+	var str = 8;
+	var spa = -8;
+	var gap = 2;
 	var col = 'white';
-	var bac = 'black';
+	var bac = 'white';
 
 	var numTable = [[true,  true,  true,  true,  true,  true,  false],  // 0
 	                [false, true,  true,  false, false, false, false],  // 1
@@ -103,30 +103,51 @@
 	  // current time
 	  var d = new Date();
 	  var time = d.toLocaleTimeString().split(":");
-	  var hours =  time[0].split("");
-	  var minutes = time[1].split("");
+	  var hours =   [8,8]; //time[0].split("");
+	  var minutes = [8,8]; //time[1].split("");
 	  var seconds = time[2].split("");
 
+	  // get dimensions of displayed digits
+	  var numberwidth = numberWidth(8, str, len, dia, spa);
+	  var firstnumberwidth = numberWidth(hours[0], str, len, dia, spa);
+	  var numberheight = numberHeight(str, hig, dia, spa);
+	  var colonwidth = colonWidth(str);
+	  var timewidth = firstnumberwidth + 2 * numberwidth + colonwidth + 3 * gap;     // assumes 3 digits
+
 	  // get our two main dimensions
-	  var w = ctx.canvas.unobstructedWidth;
-	  var h = ctx.canvas.unobstructedHeight;
+	  var d_x = Math.floor(ctx.canvas.unobstructedWidth);
+	  var d_y = Math.floor(ctx.canvas.unobstructedHeight);
 
 	  // draw background and define colors
 	  ctx.fillStyle = bac;
-	  ctx.fillRect(-1, -1, w+10, h+10);
+	  ctx.fillRect(0, 0, d_x, d_y);
+
+	  ctx.fillStyle = 'black';
+	  ctx.fillText(numberWidth(1, str, len, dia, spa).toString(), 2, 2, 120);
+	  ctx.fillText(numberwidth.toString(), 2, 12, 120);
+	  ctx.fillText(timewidth.toString(), 2, 22, 120);
+
+	  // shift the pointers to where the number will start before drawing
+	  var p_x = (d_x - timewidth) / 2;
+	  var p_y = (d_y - numberheight) / 2;
 	 
 	  // handle three numbers vs four
 	  if (hours.length == 2) {
-	    drawNumber(ctx, hours[0], w / 2 - 1.5 * gap - 10, 60, str, len, hig, dia, spa, 'purple');
-	    drawNumber(ctx, hours[1], w / 2 - 0.5 * gap - 10, 60, str, len, hig, dia, spa, 'yellow');
+	    // correct for teh fourth digit
+	    p_x -= (numberwidth + gap) / 2;
+	    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, 'purple');
+	    p_x += numberwidth + gap;
+	    drawNumber(ctx, hours[1], p_x, p_y, str, len, hig, dia, spa, 'orange');
 	  } else {
-	    drawNumber(ctx, hours[0], w / 2 - 0.5 * gap - 10, 60, str, len, hig, dia, spa, 'cyan');
+	    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, 'orange');
 	  }
 
-	  drawnColons(ctx, w / 2, 67, 5, 15, 1, 'red');
-
-	  drawNumber(ctx, minutes[0], w / 2 + 0.5 * gap - 10, 60, str, len, hig, dia, spa, 'blue');
-	  drawNumber(ctx, minutes[1], w / 2 + 1.5 * gap - 10, 60, str, len, hig, dia, spa, 'green');
+	  p_x += numberwidth + gap;
+	  drawnColons(ctx, p_x, p_y + hig / 2 + 1, str, hig, dia, 'red');
+	  p_x += colonwidth + gap
+	  drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, 'cyan');
+	  p_x += numberwidth + gap;
+	  drawNumber(ctx, minutes[1], p_x, p_y, str, len, hig, dia, spa, 'green');
 	});
 
 	// only update on the minute
@@ -204,28 +225,25 @@
 	function drawnColons(ctx, x, y, stroke, height, diagonal, color) {
 	  ctx.fillStyle = color;
 	  drawCell(ctx, x, y, stroke, stroke, diagonal);
-	  drawCell(ctx, x, y + height, stroke, stroke, diagonal);
+	  drawCell(ctx, x, y + height - stroke - 1, stroke, stroke, diagonal);
 	}
 
-
-	/* numberWidth: calculates the width of the given number
-	*   val: 
-	*   stroke: 
-	*
-	*
-	*
-	*
-	*
-	*/
-
-	function numberWidth(ctx, val, stroke, width, height, diagonal, spacing) {
-
-	  var xlen = len - 2 * dia + 2 * (str + spa);
-	  var ylen = 2 * hig + 4 * (spa - dia) + 2 * str;  
+	function numberWidth(val, stroke, width, diagonal, spacing) {
+	  if (val == 3 || val == 7) {
+	    return width + stroke + spacing - diagonal;
+	  } else if (val == 1) {
+	    return stroke;
+	  } else {
+	    return width + 2 * (spacing + stroke - diagonal);
+	  }
 	}
 
-	function numberHeight(ctx, val, stroke, width, height, diagonal, spacing) {
+	function numberHeight(stroke, height, diagonal, spacing) {
+	  return 2 * height + 3 * stroke + 4 * (spacing - diagonal);
+	}
 
+	function colonWidth(stroke) {
+	  return stroke;
 	}
 
 /***/ }),
