@@ -23,7 +23,7 @@ var rocky = require('rocky');
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
 // 
-var dia = 2;
+var dia = 0;
 var len = 20;
 var hig = 20;
 var str = 6;
@@ -93,7 +93,7 @@ rocky.on('draw', function(event) {
   if (x_just == 'left') {
     p_x = border - correction + 1;
   } else if (x_just == 'right') {
-    p_x = d_x - timewidth + correction * 3 / 2 - border + 1;
+    p_x = d_x - timewidth - border + 1;
   }
 
   ctx.fillStyle = 'black';
@@ -117,6 +117,8 @@ rocky.on('draw', function(event) {
     if (x_just == 'center') {
       // shift over the missing first number for the centered case
       p_x += (numberwidth + gap) / 2;
+    } else if (x_just == 'right'){
+      p_x += numberwidth + gap;
     }
     drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, num2);
   }
