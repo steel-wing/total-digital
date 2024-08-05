@@ -76,24 +76,35 @@
 	// drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
 	// 
-	var dia = 0;
-	var len = 30;
-	var hig = 60;
-	var str = 10;
-	var spa = -5;
-	var gap = 2;
-	var border = 5;
-	var col = 'white';
+	var dia = 2;
+	var len = 20;
+	var hig = 20;
+	var str = 6;
+	var spa = 2;
+	var gap = 3;
+	var border = 0;
+	var num1 = 'magenta';
+	var num2 = 'grey'
+	var num3 = 'red';
+	var num4 = 'blue';
+	var num5 = 'black';
+	var num6 = 'black';
+	var col = 'green';
 	var bac = 'white';
 
+	//var seconds = false;
 	var x_just = 'right';
-	var y_just = 'center';
+	var y_just = 'bottom';
 
 	// precalculate all important dimensions
 	var numberwidth = numberWidth(8, str, len, dia, spa);
 	var numberheight = numberHeight(str, hig, dia, spa);
 	var colonwidth = colonWidth(str);
 	var timewidth = 4 * numberwidth + colonwidth + 4 * gap;
+
+	// if (seconds) {
+	//   timewidth += 2 * (numberwidth + gap);
+	// }
 
 	var numTable = [[true,  true,  true,  true,  true,  true,  false],  // 0
 	                [false, true,  true,  false, false, false, false],  // 1
@@ -131,18 +142,18 @@
 	  var p_x = (d_x - timewidth - correction) / 2 + 1;  // correct for the first digit (if 1, 3, or 7)
 	  var p_y = (d_y - numberheight) / 2 + 1;
 
-	  ctx.fillStyle = 'black';
-	  ctx.fillText(numberwidth.toString(), 1, 1, 100);
-	  ctx.fillText(correction.toString(), 1, 10, 100);
-
-
 	  // handle justification of number placements
 	  if (x_just == 'left') {
 	    p_x = border - correction + 1;
-
 	  } else if (x_just == 'right') {
-	    p_x = d_x - timewidth - correction - border;
+	    p_x = d_x - timewidth + correction * 3 / 2 - border + 1;
 	  }
+
+	  ctx.fillStyle = 'black';
+	  ctx.fillText(numberwidth.toString(), 1, 1, 100);
+	  ctx.fillText(correction.toString(), 1, 11, 100);
+	  ctx.fillText(timewidth.toString(), 1, 25, 100);
+	  ctx.fillText(p_x.toString(), 1, 35, 100);
 
 	  if (y_just == 'top') {
 	    p_y = border + 1;
@@ -152,31 +163,45 @@
 	 
 	  // handle three numbers vs four
 	  if (hours.length == 2) {
-	    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, 'purple');
+	    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, num1);
 	    p_x += numberwidth + gap;
-	    drawNumber(ctx, hours[1], p_x, p_y, str, len, hig, dia, spa, 'grey');
+	    drawNumber(ctx, hours[1], p_x, p_y, str, len, hig, dia, spa, num2);
 	  } else {
-	    if (x_just !== 'left' || x_just !== 'right') {
+	    if (x_just == 'center') {
 	      // shift over the missing first number for the centered case
 	      p_x += (numberwidth + gap) / 2;
 	    }
-	    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, 'grey');
+	    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, num2);
 	  }
 
 	  // draw colon and minutes
 	  p_x += numberwidth + gap;
-	  drawnColon(ctx, p_x, p_y + (numberheight - hig) / 2, str, hig, dia, 'green');
+	  drawnColon(ctx, p_x, p_y + (numberheight - hig) / 2, str, hig, dia, col);
 	  p_x += colonwidth + gap
-	  drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, 'red');
+	  drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, num3);
 	  p_x += numberwidth + gap;
-	  drawNumber(ctx, minutes[1], p_x, p_y, str, len, hig, dia, spa, 'blue');
+	  drawNumber(ctx, minutes[1], p_x, p_y, str, len, hig, dia, spa, num4);
+
+	  // // handle seconds if requested
+	  // if (seconds) {
+	  //   p_x += numberwidth + gap;
+	  //   drawnColon(ctx, p_x, p_y + (numberheight - hig) / 2, str, hig, dia, col);
+	  //   p_x += colonwidth + gap
+	  //   drawNumber(ctx, seconds[0], p_x, p_y, str, len, hig, dia, spa, num5);
+	  //   p_x += numberwidth + gap;
+	  //   drawNumber(ctx, seconds[1], p_x, p_y, str, len, hig, dia, spa, num6);
+	  // }
 	});
 
-	// only update on the minute
-	rocky.on('minutechange', function(event) {
-	  // draw what we've done on the next pass
-	  rocky.requestDraw();
-	});
+	// if (seconds) {
+	//   // update every second
+	//   rocky.on('secondchange', function(event) {rocky.requestDraw()});
+	// } else {
+	// update every minute
+	rocky.on('minutechange', function(event) {rocky.requestDraw()});
+	// }
+
+
 
 
 	/* drawCell: draws a single cell of a 7-segment display
@@ -191,6 +216,14 @@
 	  height--;
 	  width++;
 	  x--;
+
+	  // special case if height is now 0 (1 was requested)
+	  if (height == 0) {
+	    ctx.beginPath();
+	    ctx.moveTo(x + 1, y);
+	    ctx.lineTo(x + width - 1, y);
+	    ctx.stroke();
+	  }
 
 	  // draw the cell
 	  ctx.beginPath();
@@ -226,6 +259,7 @@
 	    y = y - stroke + diagonal - spacing;
 	  }
 
+	  ctx.strokeStyle = color;
 	  ctx.fillStyle = color;
 
 	  // an array of all of the cell-drawing functions
@@ -266,12 +300,17 @@
 	*   spacing: the spacing value used in the number
 	*/
 	function numberWidth(val, stroke, width, diagonal, spacing) {
+	  var correction =  0;
+	  // if (stroke - diagonal + spacing < 0) {
+	  //   correction = 2 * (diagonal - spacing - stroke);
+	  // }
+
 	  if (val == 3 || val == 7) {
-	    return width + stroke + spacing - diagonal;
+	    return width + stroke + spacing - diagonal + correction;
 	  } else if (val == 1) {
-	    return stroke;
+	    return stroke + correction;
 	  } else {
-	    return width + 2 * (spacing + stroke - diagonal);
+	    return width + 2 * (spacing + stroke - diagonal) + correction;
 	  }
 	}
 
@@ -282,7 +321,11 @@
 	*   spacing: the spacing value used in the number
 	*/
 	function numberHeight(stroke, height, diagonal, spacing) {
-	  return 2 * height + 3 * stroke + 4 * (spacing - diagonal);
+	  var correction =  0;
+	  if (stroke - diagonal + spacing < 0) {
+	    correction = diagonal - spacing - stroke;
+	  }
+	  return 2 * height + 3 * stroke + 4 * (spacing - diagonal) + correction;
 	}
 
 	/* colonWidth: returns the width of a colon
