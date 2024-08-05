@@ -1,13 +1,13 @@
-# project  configured on Sun Aug  4 16:21:27 2024 by
+# project  configured on Sun Aug  4 18:04:55 2024 by
 # waf 1.7.11 (abi 98, python 20712f0 on linux2)
 # using /home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/waf configure
 #
 ----------------------------------------
 Setting top to
-/home/rebble/Documents/simple-digital
+/home/rebble/Documents/total-digital
 ----------------------------------------
 Setting out to
-/home/rebble/Documents/simple-digital/build
+/home/rebble/Documents/total-digital/build
 ----------------------------------------
 Checking for program webpack
 /home/rebble/.pebble-sdk/SDKs/current/node_modules/.bin/webpack

@@ -5,7 +5,7 @@
 const isSandbox = false;
 
 // Array with absolute file path strings
-const entryFilenames = ["/home/rebble/Documents/simple-digital/src/rocky/index.js"];
+const entryFilenames = ["/home/rebble/Documents/total-digital/src/rocky/index.js"];
 
 // folder path string
 const outputPath = "build/resources";
@@ -17,10 +17,10 @@ const outputFilename = "rocky-app.js";
 const resolveRoots = ["/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/common/include",
 "/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/common/tools/webpack",
 "/home/rebble/.pebble-sdk/SDKs/current/node_modules",
-"/home/rebble/Documents/simple-digital/build/js"];
+"/home/rebble/Documents/total-digital/build/js"];
 
 // Object, { alias1: 'path1', ... }
-const resolveAliases = {"app_package.json": "/home/rebble/Documents/simple-digital/package.json"};
+const resolveAliases = {"app_package.json": "/home/rebble/Documents/total-digital/package.json"};
 
 // null or Object with key 'sourceMapFilename'
 const sourceMapConfig = null;

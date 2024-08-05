@@ -7,7 +7,7 @@ const isSandbox = false;
 // Array with absolute file path strings
 const entryFilenames = ["_pkjs_shared_additions.js",
 "_pkjs_message_wrapper.js",
-"/home/rebble/Documents/simple-digital/src/pkjs/index.js"];
+"/home/rebble/Documents/total-digital/src/pkjs/index.js"];
 
 // folder path string
 const outputPath = "build";
@@ -19,10 +19,10 @@ const outputFilename = "pebble-js-app.js";
 const resolveRoots = ["/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/common/include",
 "/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble/common/tools/webpack",
 "/home/rebble/.pebble-sdk/SDKs/current/node_modules",
-"/home/rebble/Documents/simple-digital/build/js"];
+"/home/rebble/Documents/total-digital/build/js"];
 
 // Object, { alias1: 'path1', ... }
-const resolveAliases = {"app_package.json": "/home/rebble/Documents/simple-digital/package.json"};
+const resolveAliases = {"app_package.json": "/home/rebble/Documents/total-digital/package.json"};
 
 // null or Object with key 'sourceMapFilename'
 const sourceMapConfig = {"sourceMapFilename": "pebble-js-app.js.map"};

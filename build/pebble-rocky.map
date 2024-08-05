@@ -1352,7 +1352,7 @@ DISCARD
  libm.a(*)
  libgcc.a(*)
  *(.eh_frame)
-OUTPUT(/home/rebble/Documents/simple-digital/build/basalt/pebble-app.elf elf32-littlearm)
+OUTPUT(/home/rebble/Documents/total-digital/build/basalt/pebble-app.elf elf32-littlearm)
 
 .ARM.attributes
                 0x0000000000000000       0x27
@@ -1412,21 +1412,21 @@ OUTPUT(/home/rebble/Documents/simple-digital/build/basalt/pebble-app.elf elf32-l
 .debug_ranges   0x0000000000000000       0x10
  .debug_ranges  0x0000000000000000       0x10 basalt/src/rocky.c.41.o
 
-.debug_line     0x0000000000000000      0x454
- .debug_line    0x0000000000000000      0x174 basalt/src/rocky.c.41.o
- .debug_line    0x0000000000000174      0x147 basalt/appinfo.auto.c.41.o
- .debug_line    0x00000000000002bb       0xd0 basalt/src/resource_ids.auto.c.41.o
- .debug_line    0x000000000000038b       0xc9 src/message_keys.auto.c.41.o
+.debug_line     0x0000000000000000      0x453
+ .debug_line    0x0000000000000000      0x173 basalt/src/rocky.c.41.o
+ .debug_line    0x0000000000000173      0x147 basalt/appinfo.auto.c.41.o
+ .debug_line    0x00000000000002ba       0xd0 basalt/src/resource_ids.auto.c.41.o
+ .debug_line    0x000000000000038a       0xc9 src/message_keys.auto.c.41.o
 
-.debug_str      0x0000000000000000      0x51f
- .debug_str     0x0000000000000000      0x154 basalt/src/rocky.c.41.o
-                                        0x18d (size before relaxing)
- .debug_str     0x0000000000000154      0x30a basalt/appinfo.auto.c.41.o
-                                        0x42c (size before relaxing)
- .debug_str     0x000000000000045e       0x1f basalt/src/resource_ids.auto.c.41.o
-                                         0xfc (size before relaxing)
- .debug_str     0x000000000000047d       0xa2 src/message_keys.auto.c.41.o
-                                        0x167 (size before relaxing)
+.debug_str      0x0000000000000000      0x51e
+ .debug_str     0x0000000000000000      0x153 basalt/src/rocky.c.41.o
+                                        0x18c (size before relaxing)
+ .debug_str     0x0000000000000153      0x30a basalt/appinfo.auto.c.41.o
+                                        0x42b (size before relaxing)
+ .debug_str     0x000000000000045d       0x1f basalt/src/resource_ids.auto.c.41.o
+                                         0xfb (size before relaxing)
+ .debug_str     0x000000000000047c       0xa2 src/message_keys.auto.c.41.o
+                                        0x166 (size before relaxing)
 
 .debug_frame    0x0000000000000000       0x28
  .debug_frame   0x0000000000000000       0x28 basalt/src/rocky.c.41.o

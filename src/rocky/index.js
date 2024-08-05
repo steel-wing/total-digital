@@ -22,14 +22,25 @@ var rocky = require('rocky');
 // drawNumber(ctx, 2, 91,  50, 6,  16, 16, 0,  -3);     // pixel smooth
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
+// 
 var dia = 0;
-var len = 24;
-var hig = 56;
-var str = 8;
-var spa = -8;
+var len = 30;
+var hig = 60;
+var str = 10;
+var spa = -5;
 var gap = 2;
+var border = 5;
 var col = 'white';
 var bac = 'white';
+
+var x_just = 'right';
+var y_just = 'center';
+
+// precalculate all important dimensions
+var numberwidth = numberWidth(8, str, len, dia, spa);
+var numberheight = numberHeight(str, hig, dia, spa);
+var colonwidth = colonWidth(str);
+var timewidth = 4 * numberwidth + colonwidth + 4 * gap;
 
 var numTable = [[true,  true,  true,  true,  true,  true,  false],  // 0
                 [false, true,  true,  false, false, false, false],  // 1
@@ -50,16 +61,9 @@ rocky.on('draw', function(event) {
   // current time
   var d = new Date();
   var time = d.toLocaleTimeString().split(":");
-  var hours =   [8,8]; //time[0].split("");
+  var hours =   [1]; //time[0].split("");
   var minutes = [8,8]; //time[1].split("");
   var seconds = time[2].split("");
-
-  // get dimensions of displayed digits
-  var numberwidth = numberWidth(8, str, len, dia, spa);
-  var firstnumberwidth = numberWidth(hours[0], str, len, dia, spa);
-  var numberheight = numberHeight(str, hig, dia, spa);
-  var colonwidth = colonWidth(str);
-  var timewidth = 4 * numberwidth + colonwidth + 3 * gap;     // assumes 4 digits
 
   // get our two main dimensions
   var d_x = Math.floor(ctx.canvas.unobstructedWidth);
@@ -69,33 +73,50 @@ rocky.on('draw', function(event) {
   ctx.fillStyle = bac;
   ctx.fillRect(0, 0, d_x, d_y);
 
-  ctx.fillStyle = 'black';
-  ctx.fillText(numberWidth(1, str, len, dia, spa).toString(), 2, 2, 120);
-  ctx.fillText(numberwidth.toString(), 2, 12, 120);
-  ctx.fillText(timewidth.toString(), 2, 22, 120);
-
   // shift the pointers to where the number will start before drawing
-  var p_x = (d_x - timewidth ) / 2 + 1;
+  var correction = numberwidth - numberWidth(hours[0], str, len, dia, spa)
+  var p_x = (d_x - timewidth - correction) / 2 + 1;  // correct for the first digit (if 1, 3, or 7)
   var p_y = (d_y - numberheight) / 2 + 1;
+
+  ctx.fillStyle = 'black';
+  ctx.fillText(numberwidth.toString(), 1, 1, 100);
+  ctx.fillText(correction.toString(), 1, 10, 100);
+
+
+  // handle justification of number placements
+  if (x_just == 'left') {
+    p_x = border - correction + 1;
+
+  } else if (x_just == 'right') {
+    p_x = d_x - timewidth - correction - border;
+  }
+
+  if (y_just == 'top') {
+    p_y = border + 1;
+  } else if (y_just == 'bottom') {
+    p_y = d_y - numberheight - border + 1;
+  }
  
   // handle three numbers vs four
   if (hours.length == 2) {
-    // correct for the first digit (if 1, 3, or 7)
-    p_x -= firstnumberwidth / 2;
     drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, 'purple');
     p_x += numberwidth + gap;
-    drawNumber(ctx, hours[1], p_x, p_y, str, len, hig, dia, spa, 'orange');
+    drawNumber(ctx, hours[1], p_x, p_y, str, len, hig, dia, spa, 'grey');
   } else {
-    p_x += (numberwidth + gap) / 2;
-    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, 'orange');
+    if (x_just != 'left' || x_just != 'right') {
+      // shift over the missing first number for the centered case
+      p_x += (numberwidth + gap) / 2;
+    }
+    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, 'grey');
   }
 
+  // draw colon and minutes
   p_x += numberwidth + gap;
-  drawnColons(ctx, p_x, p_y + hig / 2 + 1, str, hig, dia, 'red');
+  drawnColon(ctx, p_x, p_y + (numberheight - hig) / 2, str, hig, dia, 'green');
   p_x += colonwidth + gap
-  drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, 'cyan');
+  drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, 'red');
   p_x += numberwidth + gap;
-  drawNumber(ctx, minutes[1], p_x, p_y, str, len, hig, dia, spa, 'green');
+  drawNumber(ctx, minutes[1], p_x, p_y, str, len, hig, dia, spa, 'blue');
 });
 
 // only update on the minute
@@ -124,7 +145,7 @@ function drawCell(ctx, x, y, width, height, diagonal) {
   ctx.lineTo(x + width - diagonal, y);
   ctx.lineTo(x + width, y + diagonal);
   ctx.lineTo(x + width, y + height - diagonal);
-  ctx.lineTo(x + width - diagonal, y + height);                       // do we want to give it the option for some slant?
+  ctx.lineTo(x + width - diagonal, y + height);
   ctx.lineTo(x + diagonal, y + height);
   ctx.lineTo(x, y + height - diagonal);
   ctx.lineTo(x, y + diagonal);
@@ -143,6 +164,7 @@ function drawCell(ctx, x, y, width, height, diagonal) {
 *   height: the total length from tip to tail, of the number
 *   diagonal: the block distance cut into each corner (max is at or under width / 2, going beyond looks weird)
 *   spacing: the block distance between adjacent cells
+*   color: the color of the number
 */
 function drawNumber(ctx, val, x, y, stroke, width, height, diagonal, spacing, color) {
   // handle diagonals reaching out of their cells
@@ -153,14 +175,14 @@ function drawNumber(ctx, val, x, y, stroke, width, height, diagonal, spacing, co
 
   ctx.fillStyle = color;
 
-  // an array of all of the  cell-drawing functions
-  var drawings = [function() { drawCell(ctx, x + stroke - diagonal + spacing, y, width, stroke, diagonal)},
-                  function() { drawCell(ctx, x + width + stroke + 2 * (spacing - diagonal), y + stroke - diagonal + spacing, stroke, height, diagonal)},
-                  function() { drawCell(ctx, x + width + stroke + 2 * (spacing - diagonal), y + height + 2 * stroke + 3 * (spacing - diagonal), stroke, height, diagonal)},
-                  function() { drawCell(ctx, x + stroke - diagonal + spacing, y + 2 * (height + stroke) + 4 * (spacing - diagonal), width, stroke, diagonal)},
-                  function() { drawCell(ctx, x, y + height + 2 * stroke + 3 * (spacing - diagonal), stroke, height, diagonal)},
-                  function() { drawCell(ctx, x, y + stroke - diagonal + spacing, stroke, height, diagonal)},
-                  function() { drawCell(ctx, x + stroke - diagonal + spacing, y + height + stroke + 2 * (spacing - diagonal), width, stroke, diagonal)}];
+  // an array of all of the cell-drawing functions
+  var drawings = [function() {drawCell(ctx, x + stroke - diagonal + spacing, y, width, stroke, diagonal)},
+                  function() {drawCell(ctx, x + width + stroke + 2 * (spacing - diagonal), y + stroke - diagonal + spacing, stroke, height, diagonal)},
+                  function() {drawCell(ctx, x + width + stroke + 2 * (spacing - diagonal), y + height + 2 * stroke + 3 * (spacing - diagonal), stroke, height, diagonal)},
+                  function() {drawCell(ctx, x + stroke - diagonal + spacing, y + 2 * (height + stroke) + 4 * (spacing - diagonal), width, stroke, diagonal)},
+                  function() {drawCell(ctx, x, y + height + 2 * stroke + 3 * (spacing - diagonal), stroke, height, diagonal)},
+                  function() {drawCell(ctx, x, y + stroke - diagonal + spacing, stroke, height, diagonal)},
+                  function() {drawCell(ctx, x + stroke - diagonal + spacing, y + height + stroke + 2 * (spacing - diagonal), width, stroke, diagonal)}];
 
   // draw the cells for the requested number
   for (var i = 0; i < 7; i++) {
@@ -170,12 +192,26 @@ function drawNumber(ctx, val, x, y, stroke, width, height, diagonal, spacing, co
   }
 }
 
-function drawnColons(ctx, x, y, stroke, height, diagonal, color) {
+/* drawColon: draws a colon
+*   x, y: the location of the top-left corner
+*   stroke: the width/height of the dots
+*   height: how tall the bounding box is
+*   diagonal: the block  distnace cut into each corner
+*   color: the color of the colon
+*/
+function drawnColon(ctx, x, y, stroke, height, diagonal, color) {
   ctx.fillStyle = color;
   drawCell(ctx, x, y, stroke, stroke, diagonal);
-  drawCell(ctx, x, y + height - stroke - 1, stroke, stroke, diagonal);
+  drawCell(ctx, x, y + height - stroke, stroke, stroke, diagonal);
 }
 
+/* numberWidth: returns the width of a number
+*   val: the value of the number
+*   stroke: the stroke value used in the number
+*   width: the width of a cell in the number
+*   diagonal: the diagonal value used in the number
+*   spacing: the spacing value used in the number
+*/
 function numberWidth(val, stroke, width, diagonal, spacing) {
   if (val == 3 || val == 7) {
     return width + stroke + spacing - diagonal;
@@ -186,10 +222,19 @@ function numberWidth(val, stroke, width, diagonal, spacing) {
   }
 }
 
+/* numberHeight: returns the height of a number
+*   stroke: the stroke value used in the number
+*   height: the height of a cell in the number
+*   diagonal: the diagonal value used in the number
+*   spacing: the spacing value used in the number
+*/
 function numberHeight(stroke, height, diagonal, spacing) {
   return 2 * height + 3 * stroke + 4 * (spacing - diagonal);
 }
 
+/* colonWidth: returns the width of a colon
+*   for now, this just is the stroke. might not need to be a function later.
+*/
 function colonWidth(stroke) {
   return stroke;
 }
