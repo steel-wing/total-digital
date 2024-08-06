@@ -23,12 +23,12 @@ var rocky = require('rocky');
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
 var dia = 2;
-var len = 24;
-var hig = 60;
-var str = 9;
-var spa = -7;
-var gap = 4;
-var border = 8;
+var len = 35;
+var hig = 70;
+var str = 15;
+var spa = -13;
+var gap = -4;
+var border = 2;
 var num1 = 'purple';
 var num2 = 'orange';
 var num3 = 'cyan';
@@ -268,7 +268,7 @@ function drawnColon(ctx, x, y, stroke, height, diagonal, color) {
 function numberWidth(val, stroke, width, diagonal, spacing) {
   var correction =  0;
   if (stroke - diagonal + spacing < 0) {
-    correction = 2 * (diagonal - spacing - stroke) + 1;
+    correction = 2 * (diagonal - spacing - stroke);
   }
 
   if (val == 3 || val == 7) {
@@ -290,7 +290,7 @@ function numberWidth(val, stroke, width, diagonal, spacing) {
 function numberHeight(stroke, height, diagonal, spacing) {
   var correction =  0;
   if (stroke - diagonal + spacing < 0) {
-    correction = diagonal - spacing - stroke + 1;
+    correction = 2 * (diagonal - spacing - stroke);
   }
   return 2 * height + 3 * stroke + 4 * (spacing - diagonal) + correction;
 }
