@@ -8,7 +8,7 @@ var rocky = require('rocky');
 // emery - time 2 - (2px border)
 
 // don't let spacing get too negative (> -stroke)
-// probably don't let length or higt go negative at all, probably won't be good (>0)
+// probably don't let length or hight go negative at all, probably won't be good (>0)
 
 //                val, x, y, stroke, width, height, diagonal, spacing
 // drawNumber(ctx, 2, 1,   1,  4,  25, 30, 6,  -5);     // gothic
@@ -22,26 +22,42 @@ var rocky = require('rocky');
 // drawNumber(ctx, 2, 91,  50, 6,  16, 16, 0,  -3);     // pixel smooth
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
-// 
-var dia = 0;
-var len = 20;
-var hig = 20;
-var str = 6;
-var spa = 2;
-var gap = 3;
-var border = 0;
-var num1 = 'magenta';
-var num2 = 'grey'
-var num3 = 'red';
-var num4 = 'blue';
-var num5 = 'black';
-var num6 = 'black';
-var col = 'green';
+var dia = 2;
+var len = 24;
+var hig = 60;
+var str = 9;
+var spa = -7;
+var gap = 4;
+var border = 8;
+var num1 = 'purple';
+var num2 = 'orange';
+var num3 = 'cyan';
+var num4 = 'green';
+var num5 = 'blue';
+var num6 = 'magenta';
+var col = 'red';
 var bac = 'white';
 
+// OG SIMPLE DIGITAL
+// var dia = 1;
+// var len = 12;
+// var hig = 12;
+// var str = 3;
+// var spa = 0;
+// var gap = 4;
+// var border = 2;
+// var num1 = 'white';
+// var num2 = 'white';
+// var num3 = 'white';
+// var num4 = 'white';
+// var num5 = 'white';
+// var num6 = 'white';
+// var col = 'white';
+// var bac = 'black';
+
 //var seconds = false;
-var x_just = 'right';
 var y_just = 'bottom';
+var x_just = 'right';
 
 // precalculate all important dimensions
 var numberwidth = numberWidth(8, str, len, dia, spa);
@@ -72,22 +88,22 @@ rocky.on('draw', function(event) {
   // current time
   var d = new Date();
   var time = d.toLocaleTimeString().split(":");
-  var hours =   [1]; //time[0].split("");
-  var minutes = [8,8]; //time[1].split("");
+  var hours = time[0].split("");
+  var minutes = time[1].split("");
   var seconds = time[2].split("");
 
   // get our two main dimensions
-  var d_x = Math.floor(ctx.canvas.unobstructedWidth);
-  var d_y = Math.floor(ctx.canvas.unobstructedHeight);
+  var d_x = ctx.canvas.unobstructedWidth;
+  var d_y = ctx.canvas.unobstructedHeight;
 
   // draw background and define colors
   ctx.fillStyle = bac;
   ctx.fillRect(0, 0, d_x, d_y);
 
-  // shift the pointers to where the number will start before drawing
-  var correction = numberwidth - numberWidth(hours[0], str, len, dia, spa)
-  var p_x = (d_x - timewidth - correction) / 2 + 1;  // correct for the first digit (if 1, 3, or 7)
-  var p_y = (d_y - numberheight) / 2 + 1;
+  // shift the pointers to where the number will start before drawing (favor top-right in case of odd pixels)
+  var correction = numberwidth - numberWidth(hours[0], str, len, dia, spa); // correct for the first digit (if 1, 3, or 7)
+  var p_x = (d_x - timewidth - correction) / 2 + 1;
+  var p_y = (d_y - numberheight) / 2;
 
   // handle justification of number placements
   if (x_just == 'left') {
@@ -96,11 +112,11 @@ rocky.on('draw', function(event) {
     p_x = d_x - timewidth - border + 1;
   }
 
-  ctx.fillStyle = 'black';
-  ctx.fillText(numberwidth.toString(), 1, 1, 100);
-  ctx.fillText(correction.toString(), 1, 11, 100);
-  ctx.fillText(timewidth.toString(), 1, 25, 100);
-  ctx.fillText(p_x.toString(), 1, 35, 100);
+  // ctx.fillStyle = 'black';
+  // ctx.fillText(numberwidth.toString(), 1, 1, 100);
+  // ctx.fillText(correction.toString(), 1, 11, 100);
+  // ctx.fillText(timewidth.toString(), 1, 25, 100);
+  // ctx.fillText(p_x.toString(), 1, 35, 100);
 
   if (y_just == 'top') {
     p_y = border + 1;
@@ -114,8 +130,8 @@ rocky.on('draw', function(event) {
     p_x += numberwidth + gap;
     drawNumber(ctx, hours[1], p_x, p_y, str, len, hig, dia, spa, num2);
   } else {
+    // shift over the missing first number
     if (x_just == 'center') {
-      // shift over the missing first number for the centered case
       p_x += (numberwidth + gap) / 2;
     } else if (x_just == 'right'){
       p_x += numberwidth + gap;
@@ -125,7 +141,8 @@ rocky.on('draw', function(event) {
 
   // draw colon and minutes
   p_x += numberwidth + gap;
-  drawnColon(ctx, p_x, p_y + (numberheight - hig) / 2, str, hig, dia, col);
+  // crazy colon math to (hopefully) center the colon dots in their respective cell rows
+  drawnColon(ctx, p_x, p_y + str - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col);
   p_x += colonwidth + gap
   drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, num3);
   p_x += numberwidth + gap;
@@ -149,8 +166,6 @@ rocky.on('draw', function(event) {
 // update every minute
 rocky.on('minutechange', function(event) {rocky.requestDraw()});
 // }
-
-
 
 
 /* drawCell: draws a single cell of a 7-segment display
@@ -228,6 +243,7 @@ function drawNumber(ctx, val, x, y, stroke, width, height, diagonal, spacing, co
   }
 }
 
+
 /* drawColon: draws a colon
 *   x, y: the location of the top-left corner
 *   stroke: the width/height of the dots
@@ -241,6 +257,7 @@ function drawnColon(ctx, x, y, stroke, height, diagonal, color) {
   drawCell(ctx, x, y + height - stroke, stroke, stroke, diagonal);
 }
 
+
 /* numberWidth: returns the width of a number
 *   val: the value of the number
 *   stroke: the stroke value used in the number
@@ -250,9 +267,9 @@ function drawnColon(ctx, x, y, stroke, height, diagonal, color) {
 */
 function numberWidth(val, stroke, width, diagonal, spacing) {
   var correction =  0;
-  // if (stroke - diagonal + spacing < 0) {
-  //   correction = 2 * (diagonal - spacing - stroke);
-  // }
+  if (stroke - diagonal + spacing < 0) {
+    correction = 2 * (diagonal - spacing - stroke) + 1;
+  }
 
   if (val == 3 || val == 7) {
     return width + stroke + spacing - diagonal + correction;
@@ -263,6 +280,7 @@ function numberWidth(val, stroke, width, diagonal, spacing) {
   }
 }
 
+
 /* numberHeight: returns the height of a number
 *   stroke: the stroke value used in the number
 *   height: the height of a cell in the number
@@ -272,10 +290,11 @@ function numberWidth(val, stroke, width, diagonal, spacing) {
 function numberHeight(stroke, height, diagonal, spacing) {
   var correction =  0;
   if (stroke - diagonal + spacing < 0) {
-    correction = diagonal - spacing - stroke;
+    correction = diagonal - spacing - stroke + 1;
   }
   return 2 * height + 3 * stroke + 4 * (spacing - diagonal) + correction;
 }
+
 
 /* colonWidth: returns the width of a colon
 *   for now, this just is the stroke. might not need to be a function later.

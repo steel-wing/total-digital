@@ -1,7 +1,7 @@
 {
     "versionLabel": "2.0", 
     "projectType": "rocky", 
-    "name": "simple-digital", 
+    "name": "total-digital", 
     "messageKeys": {
         "ControlKeyResetRequest": 1, 
         "ControlKeyUnsupportedError": 4, 
@@ -18,9 +18,9 @@
         "ControlKeyChunk": 3, 
         "ControlKeyResetComplete": 2
     }, 
-    "longName": "simple-digital", 
-    "displayName": "simple-digital", 
-    "shortName": "simple-digital", 
+    "longName": "total-digital", 
+    "displayName": "total-digital", 
+    "shortName": "total-digital", 
     "watchapp": {
         "watchface": true
     }, 

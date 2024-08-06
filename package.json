@@ -1,12 +1,12 @@
 {
-  "name": "simple-digital",
+  "name": "total-digital",
   "author": "MainFrame",
   "version": "2.0.0",
   "keywords": ["pebble-app"],
   "private": true,
   "dependencies": {},
   "pebble": {
-    "displayName": "simple-digital",
+    "displayName": "total-digital",
     "uuid": "cb71373f-404b-4b23-81ac-45c1ef16c8e7",
     "projectType": "rocky",
     "sdkVersion": "3",
