@@ -58,6 +58,7 @@ var bac = 'white';
 // var bac = 'black';
 
 var drawseconds = false;
+var squish = true;
 var y_just = 'bottom';
 var x_just = 'left';
 
@@ -98,23 +99,37 @@ rocky.on('draw', function(event) {
   var d_x = ctx.canvas.unobstructedWidth;
   var d_y = ctx.canvas.unobstructedHeight;
 
-  // optional(?) means of squishing if things get too wide
-  // var exactwidth = exactTimeWidth(hours, str, len, dia, spa, drawseconds)
-  // }
+  // squish the time into frame if it gets too wide
+  if (squish && (timewidth > d_x)) {
+    // find exact width of time
+    var firstnumber = numberWidth(hours[0], str, len, dia, spa);
+    var exactwidth = firstnumber + 2 * numberwidth + colonwidth + 3 * gap;
 
-  // maybe cursed while loop to squish. Should be somewhat efficient I hope?
-  // var space = exactwidth - d_x - 2 * border;
-  // while (space > 0) {
-  //   len -= 1;
-  //   space 
-  // }
+    if (hours.length == 2) {
+      exactwidth += numberwidth + gap;
+    }
+
+    if (drawseconds) {
+      exactwidth += 2 * numberwidth + colonwidth + 3 * gap;
+    }
+
+    var remainder = exactwidth - d_x  - 2 * border;
+
+    if (remainder > 0) {
+      if (drawseconds) {
+        len -= Math.ceil(remainder / 6);
+      } else {
+        len -= Math.ceil(remainder / 4);
+      }
+    }
+  }
 
   // draw background and define colors
   ctx.fillStyle = bac;
   ctx.fillRect(0, 0, d_x, d_y);
 
   // shift the pointers to where the number will start before drawing (favor top-right in case of odd pixels)
-  var correction = numberwidth - numberWidth(hours[0], str, len, dia, spa); // correct for the first digit (if 1, 3, or 7)
+  var correction = numberwidth - firstnumber; // correct for the first digit (if 1, 3, or 7)
   var p_x = (d_x - timewidth - correction) / 2 + 1;
   var p_y = (d_y - numberheight) / 2;
 
@@ -286,24 +301,6 @@ function numberWidth(val, stroke, width, diagonal, spacing) {
   } else {
     return width + 2 * (spacing + stroke - diagonal) + correction;
   }
-}
-
-/*
-*/
-function exactTimeWidth(hours, stroke, width, diagonal, spacing, seconds) {
-  var number = numberWidth(8, stroke, width, diagonal, spacing);
-  var colon = colonWidth(stroke);
-  var width = numberWidth(hours[0], stroke, width, diagonal, spacing) + 2 * number + colon + 3 * spacing;
-  
-  if (hours.length == 2) {
-    width += number + gap;
-  }
-
-  if (seconds) {
-    width += 2 * number + colon + 3 * spacing;
-  }
-
-  return width;
 }
 
 
