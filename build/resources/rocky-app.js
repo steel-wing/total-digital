@@ -76,11 +76,11 @@
 	// drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
 	var dia = 2;
-	var len = 35;
-	var hig = 50;
-	var str = 15;
-	var spa = -13;
-	var gap = -4;
+	var len = 40;
+	var hig = 70;
+	var str = 6;
+	var spa = -3;
+	var gap = 1;
 	var border = 2;
 	var num1 = 'purple';
 	var num2 = 'orange';
@@ -88,7 +88,8 @@
 	var num4 = 'green';
 	var num5 = 'blue';
 	var num6 = 'magenta';
-	var col = 'red';
+	var col1 = 'grey';
+	var col2 = 'red';
 	var bac = 'white';
 
 	// OG SIMPLE DIGITAL
@@ -105,12 +106,13 @@
 	// var num4 = 'white';
 	// var num5 = 'white';
 	// var num6 = 'white';
-	// var col = 'white';
+	// var col1 = 'white';
+	// var col2 = 'white';
 	// var bac = 'black';
 
-	//var seconds = false;
+	var drawseconds = false;
 	var y_just = 'bottom';
-	var x_just = 'right';
+	var x_just = 'left';
 
 	// precalculate all important dimensions
 	var numberwidth = numberWidth(8, str, len, dia, spa);
@@ -118,9 +120,9 @@
 	var colonwidth = colonWidth(str);
 	var timewidth = 4 * numberwidth + colonwidth + 4 * gap;
 
-	// if (seconds) {
-	//   timewidth += 2 * (numberwidth + gap);
-	// }
+	if (drawseconds) {
+	  timewidth += colonwidth + 2 * numberwidth + 3 * gap;
+	}
 
 	var numTable = [[true,  true,  true,  true,  true,  true,  false],  // 0
 	                [false, true,  true,  false, false, false, false],  // 1
@@ -149,6 +151,17 @@
 	  var d_x = ctx.canvas.unobstructedWidth;
 	  var d_y = ctx.canvas.unobstructedHeight;
 
+	  // optional(?) means of squishing if things get too wide
+	  // var exactwidth = exactTimeWidth(hours, str, len, dia, spa, drawseconds)
+	  // }
+
+	  // maybe cursed while loop to squish. Should be somewhat efficient I hope?
+	  // var space = exactwidth - d_x - 2 * border;
+	  // while (space > 0) {
+	  //   len -= 1;
+	  //   space 
+	  // }
+
 	  // draw background and define colors
 	  ctx.fillStyle = bac;
 	  ctx.fillRect(0, 0, d_x, d_y);
@@ -164,12 +177,6 @@
 	  } else if (x_just == 'right') {
 	    p_x = d_x - timewidth - border + 1;
 	  }
-
-	  // ctx.fillStyle = 'black';
-	  // ctx.fillText(numberwidth.toString(), 1, 1, 100);
-	  // ctx.fillText(correction.toString(), 1, 11, 100);
-	  // ctx.fillText(timewidth.toString(), 1, 25, 100);
-	  // ctx.fillText(p_x.toString(), 1, 35, 100);
 
 	  if (y_just == 'top') {
 	    p_y = border + 1;
@@ -189,36 +196,37 @@
 	    } else if (x_just == 'right'){
 	      p_x += numberwidth + gap;
 	    }
+
 	    drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, num2);
 	  }
 
 	  // draw colon and minutes
 	  p_x += numberwidth + gap;
-	  // crazy colon math to (hopefully) center the colon dots in their respective cell rows
-	  drawnColon(ctx, p_x, p_y + str - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col);
+	  // crazy colon math to center the colon dots in their respective cell rows
+	  drawColon(ctx, p_x, p_y + str - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col1);
 	  p_x += colonwidth + gap
 	  drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, num3);
 	  p_x += numberwidth + gap;
 	  drawNumber(ctx, minutes[1], p_x, p_y, str, len, hig, dia, spa, num4);
 
-	  // // handle seconds if requested
-	  // if (seconds) {
-	  //   p_x += numberwidth + gap;
-	  //   drawnColon(ctx, p_x, p_y + (numberheight - hig) / 2, str, hig, dia, col);
-	  //   p_x += colonwidth + gap
-	  //   drawNumber(ctx, seconds[0], p_x, p_y, str, len, hig, dia, spa, num5);
-	  //   p_x += numberwidth + gap;
-	  //   drawNumber(ctx, seconds[1], p_x, p_y, str, len, hig, dia, spa, num6);
-	  // }
+	  // handle seconds if requested
+	  if (drawseconds) {
+	    p_x += numberwidth + gap;
+	    drawColon(ctx, p_x, p_y + str - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col2);
+	    p_x += colonwidth + gap
+	    drawNumber(ctx, seconds[0], p_x, p_y, str, len, hig, dia, spa, num5);
+	    p_x += numberwidth + gap;
+	    drawNumber(ctx, seconds[1], p_x, p_y, str, len, hig, dia, spa, num6);
+	  }
 	});
 
-	// if (seconds) {
-	//   // update every second
-	//   rocky.on('secondchange', function(event) {rocky.requestDraw()});
-	// } else {
-	// update every minute
-	rocky.on('minutechange', function(event) {rocky.requestDraw()});
-	// }
+	if (drawseconds) {
+	  // update every second
+	  rocky.on('secondchange', function(event) {rocky.requestDraw()});
+	} else {
+	  // update every minute
+	  rocky.on('minutechange', function(event) {rocky.requestDraw()});
+	}
 
 
 	/* drawCell: draws a single cell of a 7-segment display
@@ -304,7 +312,7 @@
 	*   diagonal: the block  distnace cut into each corner
 	*   color: the color of the colon
 	*/
-	function drawnColon(ctx, x, y, stroke, height, diagonal, color) {
+	function drawColon(ctx, x, y, stroke, height, diagonal, color) {
 	  ctx.fillStyle = color;
 	  drawCell(ctx, x, y, stroke, stroke, diagonal);
 	  drawCell(ctx, x, y + height - stroke, stroke, stroke, diagonal);
@@ -331,6 +339,24 @@
 	  } else {
 	    return width + 2 * (spacing + stroke - diagonal) + correction;
 	  }
+	}
+
+	/*
+	*/
+	function exactTimeWidth(hours, stroke, width, diagonal, spacing, seconds) {
+	  var number = numberWidth(8, stroke, width, diagonal, spacing);
+	  var colon = colonWidth(stroke);
+	  var width = numberWidth(hours[0], stroke, width, diagonal, spacing) + 2 * number + colon + 3 * spacing;
+	  
+	  if (hours.length == 2) {
+	    width += number + gap;
+	  }
+
+	  if (seconds) {
+	    width += 2 * number + colon + 3 * spacing;
+	  }
+
+	  return width;
 	}
 
 
