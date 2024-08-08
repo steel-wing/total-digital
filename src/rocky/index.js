@@ -22,13 +22,14 @@ var rocky = require('rocky');
 // drawNumber(ctx, 2, 91,  50, 6,  16, 16, 0,  -3);     // pixel smooth
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
-var dia = 2;
-var len = 40;
-var hig = 70;
-var str = 6;
-var spa = -3;
-var gap = 1;
-var border = 2;
+var diagonal = 8;
+var length = 50;
+var hight = 100;
+var stroke = 6;
+var space = -3;
+var gapth = 1;
+var border_x = 5;
+var border_y = 15;
 var num1 = 'purple';
 var num2 = 'orange';
 var num3 = 'cyan';
@@ -40,13 +41,14 @@ var col2 = 'red';
 var bac = 'white';
 
 // OG SIMPLE DIGITAL
-// var dia = 1;
-// var len = 12;
-// var hig = 12;
-// var str = 3;
-// var spa = 0;
-// var gap = 4;
-// var border = 2;
+// var diagonal = 1;
+// var length = 12;
+// var hight = 12;
+// var stroke = 3;
+// var space = 0;
+// var gapth = 4;
+// var border_x = 0;
+// var border_y = 0;
 // var num1 = 'white';
 // var num2 = 'white';
 // var num3 = 'white';
@@ -58,32 +60,22 @@ var bac = 'white';
 // var bac = 'black';
 
 var drawseconds = false;
-var squish = true;
-var y_just = 'bottom';
-var x_just = 'left';
-
-// precalculate all important dimensions
-var numberwidth = numberWidth(8, str, len, dia, spa);
-var numberheight = numberHeight(str, hig, dia, spa);
-var colonwidth = colonWidth(str);
-var timewidth = 4 * numberwidth + colonwidth + 4 * gap;
-
-if (drawseconds) {
-  timewidth += colonwidth + 2 * numberwidth + 3 * gap;
-}
-
-var numTable = [[true,  true,  true,  true,  true,  true,  false],  // 0
-                [false, true,  true,  false, false, false, false],  // 1
-                [true,  true,  false, true,  true,  false, true ],  // 2
-                [true,  true,  true,  true,  false, false, true ],  // 3
-                [false, true,  true,  false, false, true,  true ],  // 4
-                [true,  false, true,  true,  false, true,  true ],  // 5
-                [true,  false, true,  true,  true,  true,  true ],  // 6
-                [true,  true,  true,  false, false, false, false],  // 7
-                [true,  true,  true,  true,  true,  true,  true ],  // 8
-                [true,  true,  true,  true,  false, true,  true ]]; // 9
+var squish_x = true;
+var squish_y = true;
+var y_just = 'center';
+var x_just = 'center';
 
 rocky.on('draw', function(event) {
+  // import settings
+  var dia = diagonal;
+  var len = length;
+  var hig = hight;
+  var str = stroke;
+  var spa = space;
+  var gap = gapth;
+  var box = border_x;
+  var boy = border_y;
+
   // get the CanvasRenderingContext2D object and clear the screen
   var ctx = event.context;
   ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
@@ -91,59 +83,91 @@ rocky.on('draw', function(event) {
   // current time
   var d = new Date();
   var time = d.toLocaleTimeString().split(":");
-  var hours = time[0].split("");
-  var minutes = time[1].split("");
+  var hours =   ['8', '8']  // time[0].split("");
+  var minutes = ['8', '8']  // time[1].split("");
   var seconds = time[2].split("");
 
   // get our two main dimensions
   var d_x = ctx.canvas.unobstructedWidth;
   var d_y = ctx.canvas.unobstructedHeight;
 
-  // squish the time into frame if it gets too wide
-  if (squish && (timewidth > d_x)) {
-    // find exact width of time
-    var firstnumber = numberWidth(hours[0], str, len, dia, spa);
-    var exactwidth = firstnumber + 2 * numberwidth + colonwidth + 3 * gap;
-
-    if (hours.length == 2) {
-      exactwidth += numberwidth + gap;
-    }
-
-    if (drawseconds) {
-      exactwidth += 2 * numberwidth + colonwidth + 3 * gap;
-    }
-
-    var remainder = exactwidth - d_x  - 2 * border;
-
-    if (remainder > 0) {
-      if (drawseconds) {
-        len -= Math.ceil(remainder / 6);
-      } else {
-        len -= Math.ceil(remainder / 4);
-      }
-    }
-  }
-
   // draw background and define colors
   ctx.fillStyle = bac;
   ctx.fillRect(0, 0, d_x, d_y);
 
+  // calculate all important dimensions
+  var firstnumber = numberWidth(hours[0], str, len, dia, spa);
+  var numberwidth = numberWidth(8, str, len, dia, spa);
+  var numberheight = numberHeight(str, hig, dia, spa);
+  var colonwidth = colonWidth(str);
+  var clockwidth = 4 * numberwidth + colonwidth + 4 * gap;
+  var exactwidth = firstnumber + 2 * numberwidth + colonwidth + 3 * gap;
+
+  // conditional repositionings
+  if (hours.length == 2) {
+    exactwidth += numberwidth + gap;
+  }
+
+  if (drawseconds) {
+    exactwidth += 2 * numberwidth + colonwidth + 3 * gap;
+  }
+
+  // squish the time into frame if it gets too wide
+  if (squish_x && (exactwidth > d_x - 2 * box)) {
+    var remainder = exactwidth - d_x  + 2 * box;
+    var cutback = 2 + hours.length;
+
+    if (hours[0] == '1') {
+      cutback -= 1;
+    }
+
+    if (drawseconds) {
+      cutback += 2;
+    } 
+    // bring things back into bounds
+    len -= Math.ceil(remainder / cutback);
+
+    // recalculating...
+    firstnumber = numberWidth(hours[0], str, len, dia, spa);
+    numberwidth = numberWidth(8, str, len, dia, spa);
+    clockwidth = 4 * numberwidth + colonwidth + 4 * gap;
+    if (drawseconds) {
+      clockwidth += 2 * numberwidth + colonwidth + 3 * gap;
+    }
+  }
+
+  // squish the time into frame if gets too tall 
+  if (squish_y && numberheight > d_y - 2 * boy) {
+    var overhead = numberheight - d_y + 2 *  boy;
+
+    hig -= Math.ceil(overhead / 2);
+
+    // recalculating...
+    numberheight = numberHeight(str, hig, dia, spa);
+  }
+
   // shift the pointers to where the number will start before drawing (favor top-right in case of odd pixels)
   var correction = numberwidth - firstnumber; // correct for the first digit (if 1, 3, or 7)
-  var p_x = (d_x - timewidth - correction) / 2 + 1;
-  var p_y = (d_y - numberheight) / 2;
+  var p_x = (d_x - clockwidth - correction) / 2 + 1;
+  var p_y;
+  if (numberheight % 2 == 0) {
+    p_y = (d_y - numberheight) / 2 + 1;
+  } else {
+    p_y = (d_y - numberheight) / 2;
+  }
+
 
   // handle justification of number placements
   if (x_just == 'left') {
-    p_x = border - correction + 1;
+    p_x = box - correction + 1;
   } else if (x_just == 'right') {
-    p_x = d_x - timewidth - border + 1;
+    p_x = d_x - clockwidth - box + 1;
   }
 
   if (y_just == 'top') {
-    p_y = border + 1;
+    p_y = boy + 1;
   } else if (y_just == 'bottom') {
-    p_y = d_y - numberheight - border + 1;
+    p_y = d_y - numberheight - boy + 1;
   }
  
   // handle three numbers vs four
@@ -182,6 +206,9 @@ rocky.on('draw', function(event) {
   }
 });
 
+
+
+
 if (drawseconds) {
   // update every second
   rocky.on('secondchange', function(event) {rocky.requestDraw()});
@@ -189,6 +216,8 @@ if (drawseconds) {
   // update every minute
   rocky.on('minutechange', function(event) {rocky.requestDraw()});
 }
+
+
 
 
 /* drawCell: draws a single cell of a 7-segment display
@@ -240,6 +269,17 @@ function drawCell(ctx, x, y, width, height, diagonal) {
 *   color: the color of the number
 */
 function drawNumber(ctx, val, x, y, stroke, width, height, diagonal, spacing, color) {
+  var numTable = [[true,  true,  true,  true,  true,  true,  false],  // 0
+                  [false, true,  true,  false, false, false, false],  // 1
+                  [true,  true,  false, true,  true,  false, true ],  // 2
+                  [true,  true,  true,  true,  false, false, true ],  // 3
+                  [false, true,  true,  false, false, true,  true ],  // 4
+                  [true,  false, true,  true,  false, true,  true ],  // 5
+                  [true,  false, true,  true,  true,  true,  true ],  // 6
+                  [true,  true,  true,  false, false, false, false],  // 7
+                  [true,  true,  true,  true,  true,  true,  true ],  // 8
+                  [true,  true,  true,  true,  false, true,  true ]]; // 9
+
   // handle diagonals reaching out of their cells
   if (stroke - diagonal + spacing < 0) {
     x = x - stroke + diagonal - spacing;
