@@ -25,11 +25,11 @@ var rocky = require('rocky');
 var diagonal = 8;
 var length = 50;
 var hight = 100;
-var stroke = 6;
+var stroke = 9;
 var space = -3;
 var gapth = 1;
 var border_x = 5;
-var border_y = 15;
+var border_y = 25;
 var num1 = 'purple';
 var num2 = 'orange';
 var num3 = 'cyan';
@@ -65,6 +65,7 @@ var squish_y = true;
 var y_just = 'center';
 var x_just = 'center';
 
+
 rocky.on('draw', function(event) {
   // import settings
   var dia = diagonal;
@@ -83,8 +84,8 @@ rocky.on('draw', function(event) {
   // current time
   var d = new Date();
   var time = d.toLocaleTimeString().split(":");
-  var hours =   ['8', '8']  // time[0].split("");
-  var minutes = ['8', '8']  // time[1].split("");
+  var hours = time[0].split("");
+  var minutes = time[1].split("");
   var seconds = time[2].split("");
 
   // get our two main dimensions
