@@ -22,14 +22,15 @@ var rocky = require('rocky');
 // drawNumber(ctx, 2, 91,  50, 6,  16, 16, 0,  -3);     // pixel smooth
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
-var diagonal = 8;
+var diagonal = 0;
 var length = 50;
 var hight = 100;
-var stroke = 9;
-var space = -3;
-var gapth = 1;
+var stroke = 8;
+var space = -8;
+var gapth = 2;
 var border_x = 5;
 var border_y = 25;
+
 var num1 = 'purple';
 var num2 = 'orange';
 var num3 = 'cyan';
@@ -47,19 +48,20 @@ var bac = 'white';
 // var stroke = 3;
 // var space = 0;
 // var gapth = 4;
-// var border_x = 0;
-// var border_y = 0;
-// var num1 = 'white';
-// var num2 = 'white';
-// var num3 = 'white';
-// var num4 = 'white';
-// var num5 = 'white';
-// var num6 = 'white';
-// var col1 = 'white';
-// var col2 = 'white';
-// var bac = 'black';
+// var border_x = 4;
+// var border_y = 4;
 
-var drawseconds = false;
+// var num1 = 'black';
+// var num2 = 'black';
+// var num3 = 'black';
+// var num4 = 'black';
+// var num5 = 'black';
+// var num6 = 'black';
+// var col1 = 'black';
+// var col2 = 'black';
+// var bac = 'white';
+
+var drawseconds = true;
 var squish_x = true;
 var squish_y = true;
 var y_just = 'center';
@@ -77,22 +79,19 @@ rocky.on('draw', function(event) {
   var box = border_x;
   var boy = border_y;
 
-  // get the CanvasRenderingContext2D object and clear the screen
-  var ctx = event.context;
-  ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
-
-  // current time
-  var d = new Date();
-  var time = d.toLocaleTimeString().split(":");
+  // get time information
+  var time = new Date().toLocaleTimeString().split(":");
   var hours = time[0].split("");
   var minutes = time[1].split("");
   var seconds = time[2].split("");
 
-  // get our two main dimensions
+  // get our two main dimensions from our context object
+  var ctx = event.context;
   var d_x = ctx.canvas.unobstructedWidth;
   var d_y = ctx.canvas.unobstructedHeight;
 
-  // draw background and define colors
+  // clear and color background
+  ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
   ctx.fillStyle = bac;
   ctx.fillRect(0, 0, d_x, d_y);
 
@@ -101,16 +100,15 @@ rocky.on('draw', function(event) {
   var numberwidth = numberWidth(8, str, len, dia, spa);
   var numberheight = numberHeight(str, hig, dia, spa);
   var colonwidth = colonWidth(str);
-  var clockwidth = 4 * numberwidth + colonwidth + 4 * gap;
-  var exactwidth = firstnumber + 2 * numberwidth + colonwidth + 3 * gap;
+  var exactwidth = firstnumber + 2 * numberwidth + colonwidth + 3 * gap;  // h:mm
 
   // conditional repositionings
   if (hours.length == 2) {
-    exactwidth += numberwidth + gap;
+    exactwidth += numberwidth + gap;  // hh:mm
   }
 
   if (drawseconds) {
-    exactwidth += 2 * numberwidth + colonwidth + 3 * gap;
+    exactwidth += 2 * numberwidth + colonwidth + 3 * gap; // hh:mm:ss
   }
 
   // squish the time into frame if it gets too wide
@@ -124,16 +122,22 @@ rocky.on('draw', function(event) {
 
     if (drawseconds) {
       cutback += 2;
-    } 
+    }
+
     // bring things back into bounds
     len -= Math.ceil(remainder / cutback);
 
     // recalculating...
     firstnumber = numberWidth(hours[0], str, len, dia, spa);
     numberwidth = numberWidth(8, str, len, dia, spa);
-    clockwidth = 4 * numberwidth + colonwidth + 4 * gap;
+    exactwidth = firstnumber + 2 * numberwidth + colonwidth + 3 * gap;    // h:mm
+
+    if (hours.length == 2) {
+      exactwidth += numberwidth + gap;  // hh:mm
+    }
+
     if (drawseconds) {
-      clockwidth += 2 * numberwidth + colonwidth + 3 * gap;
+      exactwidth += 2 * numberwidth + colonwidth + 3 * gap; // hh:mm:ss
     }
   }
 
@@ -147,22 +151,27 @@ rocky.on('draw', function(event) {
     numberheight = numberHeight(str, hig, dia, spa);
   }
 
+  // we assume hh:mm to start, and will compensate for it later (we already handled the true case earlier for squeezing)
+  if (hours.length == 1) {
+    exactwidth += numberwidth + gap;
+  }
+
   // shift the pointers to where the number will start before drawing (favor top-right in case of odd pixels)
-  var correction = numberwidth - firstnumber; // correct for the first digit (if 1, 3, or 7)
-  var p_x = (d_x - clockwidth - correction) / 2 + 1;
+  var correction = numberwidth - firstnumber; // correct justification for the first digit (if 1, 3, or 7)
+  var p_x = (d_x - exactwidth) / 2 - correction + 1;
   var p_y;
+
   if (numberheight % 2 == 0) {
     p_y = (d_y - numberheight) / 2 + 1;
   } else {
     p_y = (d_y - numberheight) / 2;
   }
 
-
   // handle justification of number placements
   if (x_just == 'left') {
     p_x = box - correction + 1;
   } else if (x_just == 'right') {
-    p_x = d_x - clockwidth - box + 1;
+    p_x = d_x - exactwidth - correction - box + 1;
   }
 
   if (y_just == 'top') {
@@ -171,7 +180,7 @@ rocky.on('draw', function(event) {
     p_y = d_y - numberheight - boy + 1;
   }
  
-  // handle three numbers vs four
+  // draw the hours
   if (hours.length == 2) {
     drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, num1);
     p_x += numberwidth + gap;
@@ -183,7 +192,6 @@ rocky.on('draw', function(event) {
     } else if (x_just == 'right'){
       p_x += numberwidth + gap;
     }
-
     drawNumber(ctx, hours[0], p_x, p_y, str, len, hig, dia, spa, num2);
   }
 
@@ -205,9 +213,7 @@ rocky.on('draw', function(event) {
     p_x += numberwidth + gap;
     drawNumber(ctx, seconds[1], p_x, p_y, str, len, hig, dia, spa, num6);
   }
-});
-
-
+  });
 
 
 if (drawseconds) {
@@ -217,8 +223,6 @@ if (drawseconds) {
   // update every minute
   rocky.on('minutechange', function(event) {rocky.requestDraw()});
 }
-
-
 
 
 /* drawCell: draws a single cell of a 7-segment display
