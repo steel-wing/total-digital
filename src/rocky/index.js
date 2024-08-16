@@ -22,48 +22,48 @@ var rocky = require('rocky');
 // drawNumber(ctx, 2, 91,  50, 6,  16, 16, 0,  -3);     // pixel smooth
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
-var diagonal = 0;
-var length = 50;
-var hight = 100;
-var stroke = 8;
-var space = -8;
-var gapth = 2;
-var border_x = 5;
-var border_y = 25;
+// var diagonal = 2;
+// var length = 50;
+// var hight = 30;
+// var stroke = 8;
+// var space = -5;
+// var gapth = 2;
+// var border_x = 5;
+// var border_y = 25;
 
-var num1 = 'purple';
-var num2 = 'orange';
-var num3 = 'cyan';
-var num4 = 'green';
-var num5 = 'blue';
-var num6 = 'magenta';
-var col1 = 'grey';
-var col2 = 'red';
-var bac = 'white';
-
-// OG SIMPLE DIGITAL
-// var diagonal = 1;
-// var length = 12;
-// var hight = 12;
-// var stroke = 3;
-// var space = 0;
-// var gapth = 4;
-// var border_x = 4;
-// var border_y = 4;
-
-// var num1 = 'black';
-// var num2 = 'black';
-// var num3 = 'black';
-// var num4 = 'black';
-// var num5 = 'black';
-// var num6 = 'black';
-// var col1 = 'black';
-// var col2 = 'black';
+// var num1 = 'purple';
+// var num2 = 'orange';
+// var num3 = 'green';
+// var num4 = 'cyan';
+// var num5 = 'blue';
+// var num6 = 'magenta';
+// var col1 = 'grey';
+// var col2 = 'red';
 // var bac = 'white';
 
-var drawseconds = true;
-var squish_x = true;
-var squish_y = true;
+// OG SIMPLE DIGITAL
+var diagonal = 2;
+var length = 7;
+var hight = 7;
+var stroke = 7;
+var space = 4;
+var gapth = 4;
+var border_x = 4;
+var border_y = 4;
+
+var num1 = 'black';
+var num2 = 'black';
+var num3 = 'black';
+var num4 = 'black';
+var num5 = 'black';
+var num6 = 'black';
+var col1 = 'black';
+var col2 = 'black';
+var bac = 'white';
+
+var drawseconds = false;
+var squish_x = false;
+var squish_y = false;
 var y_just = 'center';
 var x_just = 'center';
 
