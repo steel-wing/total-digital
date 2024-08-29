@@ -1,6 +1,8 @@
 // gotta have it
 var rocky = require('rocky');
 
+var settings = null;
+
 // aplite - pebble - 
 // basalt - time - 144x168 (2px border)
 // chalk - time round -   (circular, border?)
@@ -10,7 +12,7 @@ var rocky = require('rocky');
 // don't let spacing get too negative (> -stroke)
 // probably don't let length or hight go negative at all, probably won't be good (>0)
 
-//                val, x, y, stroke, width, height, diagonal, spacing
+// val, x, y, stroke, width, height, diagonal, spacing
 // drawNumber(ctx, 2, 1,   1,  4,  25, 30, 6,  -5);     // gothic
 // drawNumber(ctx, 2, 31,  1,  14, 14, 14, 6,  -1);     // diamond
 // drawNumber(ctx, 2, 61,  1,  5,  9,  14, 2,  1);      // digital classic
@@ -42,28 +44,28 @@ var rocky = require('rocky');
 // var bac = 'white';
 
 // OG SIMPLE DIGITAL
-var diagonal = 2;
-var length = 7;
-var hight = 7;
-var stroke = 7;
-var space = 4;
+var diagonal = 1;
+var length = 20;
+var hight = 20;
+var stroke = 5;
+var space = 2;
 var gapth = 4;
-var border_x = 4;
-var border_y = 4;
+var border_x = 5;
+var border_y = 5;
 
-var num1 = 'black';
-var num2 = 'black';
-var num3 = 'black';
-var num4 = 'black';
-var num5 = 'black';
-var num6 = 'black';
-var col1 = 'black';
-var col2 = 'black';
-var bac = 'white';
+var num1 = 'white';
+var num2 = 'white';
+var num3 = 'white';
+var num4 = 'white';
+var num5 = 'white';
+var num6 = 'white';
+var col1 = 'white';
+var col2 = 'white';
+var bac = 'black';
 
 var drawseconds = false;
-var squish_x = false;
-var squish_y = false;
+var squish_x = true;
+var squish_y = true;
 var y_just = 'center';
 var x_just = 'center';
 
@@ -78,6 +80,18 @@ rocky.on('draw', function(event) {
   var gap = gapth;
   var box = border_x;
   var boy = border_y;
+
+  // if(settings) {
+  //   dia = settings.diagonal;
+  //   len = length;
+  //   hig = hight;
+  //   str = stroke;
+  //   spa = space;
+  //   gap = gapth;
+  //   box = border_x;
+  //   boy = border_y;
+  //   // complete this later
+  // }
 
   // get time information
   var time = new Date().toLocaleTimeString().split(":");
@@ -216,6 +230,8 @@ rocky.on('draw', function(event) {
   });
 
 
+rocky.on('message', function(event) {settings = event.data;});
+
 if (drawseconds) {
   // update every second
   rocky.on('secondchange', function(event) {rocky.requestDraw()});
@@ -224,6 +240,7 @@ if (drawseconds) {
   rocky.on('minutechange', function(event) {rocky.requestDraw()});
 }
 
+rocky.postMessage({command: "settings"});
 
 /* drawCell: draws a single cell of a 7-segment display
 *   x, y: define the top-left corner of the bounding box (in-center)
