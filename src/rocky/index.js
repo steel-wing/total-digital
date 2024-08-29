@@ -212,7 +212,7 @@ rocky.on('draw', function(event) {
   // draw colon and minutes
   p_x += numberwidth + gap;
   // crazy colon math to center the colon dots in their respective cell rows
-  drawColon(ctx, p_x, p_y + str - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col1);
+  drawColon(ctx, p_x, p_y + (hig + str) / 2 - dia + spa - 1, str, hig + str + 2 * (spa - dia), dia, col1);
   p_x += colonwidth + gap
   drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, num3);
   p_x += numberwidth + gap;
@@ -221,7 +221,7 @@ rocky.on('draw', function(event) {
   // handle seconds if requested
   if (drawseconds) {
     p_x += numberwidth + gap;
-    drawColon(ctx, p_x, p_y + str - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col2);
+    drawColon(ctx, p_x, p_y + str / 2 - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col2);
     p_x += colonwidth + gap
     drawNumber(ctx, seconds[0], p_x, p_y, str, len, hig, dia, spa, num5);
     p_x += numberwidth + gap;
@@ -339,7 +339,7 @@ function drawNumber(ctx, val, x, y, stroke, width, height, diagonal, spacing, co
 function drawColon(ctx, x, y, stroke, height, diagonal, color) {
   ctx.fillStyle = color;
   drawCell(ctx, x, y, stroke, stroke, diagonal);
-  drawCell(ctx, x, y + height - stroke, stroke, stroke, diagonal);
+  drawCell(ctx, x, y + height, stroke, stroke, diagonal);
 }
 
 
