@@ -44,12 +44,12 @@ var settings = null;
 // var bac = 'white';
 
 // OG SIMPLE DIGITAL
-var diagonal = 1;
-var length = 20;
-var hight = 20;
-var stroke = 5;
-var space = 2;
-var gapth = 4;
+var diagonal = 3;
+var length = 15;
+var hight = 15;
+var stroke = 7;
+var space = 0;
+var gapth = 3;
 var border_x = 5;
 var border_y = 5;
 
@@ -212,7 +212,7 @@ rocky.on('draw', function(event) {
   // draw colon and minutes
   p_x += numberwidth + gap;
   // crazy colon math to center the colon dots in their respective cell rows
-  drawColon(ctx, p_x, p_y + (hig + str) / 2 - dia + spa - 1, str, hig + str + 2 * (spa - dia), dia, col1);
+  drawColon(ctx, p_x, p_y + (hig + str) / 2 - dia + spa, str, hig + str + 2 * (spa - dia), dia, col1);
   p_x += colonwidth + gap
   drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, num3);
   p_x += numberwidth + gap;
@@ -221,7 +221,7 @@ rocky.on('draw', function(event) {
   // handle seconds if requested
   if (drawseconds) {
     p_x += numberwidth + gap;
-    drawColon(ctx, p_x, p_y + str / 2 - dia + spa + hig / 2 - 1, str, hig + str + 2 * (1 + spa - dia), dia, col2);
+    drawColon(ctx, p_x, p_y + (hig + str) / 2 - dia + spa, str, hig + str + 2 * (spa - dia), dia, col2);
     p_x += colonwidth + gap
     drawNumber(ctx, seconds[0], p_x, p_y, str, len, hig, dia, spa, num5);
     p_x += numberwidth + gap;
