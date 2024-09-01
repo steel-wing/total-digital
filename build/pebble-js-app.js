@@ -1130,11 +1130,11 @@
 	module.exports = [
 	  {
 	    "type": "heading",
-	    "defaultValue": "Total Digital Config"
+	    "defaultValue": "Total Digital Configuration"
 	  },
 	  {
 	    "type": "text",
-	    "defaultValue": "Clay with Rocky.js"
+	    "defaultValue": "Welcome to total control"
 	  },
 	  {
 	    "type": "section",
@@ -1211,7 +1211,7 @@
 	        "messageKey": "stroke",
 	        "defaultValue": 5,
 	        "label": "Line Width",
-	        "description": "The thickness of each individual cell. Creates pixels when equal to cell width and height",
+	        "description": "The thickness of each individual cell. Set equal to width and height for square-ish shapes",
 	        "min": 1,
 	        "max": 50,
 	        "step": 1
@@ -1221,7 +1221,7 @@
 	        "messageKey": "diagonal",
 	        "defaultValue": 1,
 	        "label": "Diagonal Inset",
-	        "description": "The amount of corner inset on the edges of the cell. Set to 0 for rectangles and greater than stroke for funky stuff",
+	        "description": "The amount of corner inset on the edges of the cell. Set to 0 for rectangles or set to greater than stroke for funky stuff",
 	        "min": -50,
 	        "max": 50,
 	        "step": 1
@@ -1340,7 +1340,7 @@
 	        "messageKey": "xSquish",
 	        "label": "Dynamically Resize Width",
 	        "defaultValue": true,
-	        "description": "This makes your numbers thinner in the event of the clockface exceeding the bounds selected above (10:00 is wider than 1:00)"
+	        "description": "This makes your numbers skinnier in the event of the clockface exceeding the horizontal border (10:00 is wider than 1:00)"
 	      },
 	      {
 	        "type": "toggle",
@@ -1353,7 +1353,8 @@
 	        "type": "toggle",
 	        "messageKey": "seconds",
 	        "label": "Display Seconds",
-	        "defaultValue": false
+	        "defaultValue": false,
+	        "description": "Dynamically resizing width is recommended"
 	      }
 	    ]
 	  },

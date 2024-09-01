@@ -11,7 +11,9 @@
     "companyName": "MainFrame", 
     "enableMultiJS": true, 
     "sdkVersion": "3", 
-    "capabilities": [], 
+    "capabilities": [
+        "configurable"
+    ], 
     "appKeys": {
         "ControlKeyResetRequest": 1, 
         "ControlKeyUnsupportedError": 4, 

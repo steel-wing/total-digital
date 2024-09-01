@@ -47,7 +47,7 @@ PEBBLE_SDK_ROOT = '/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble'
 PLATFORM = {'TAGS': ['diorite', 'bw', 'rect', 'mic', 'strap', 'health', '144w', '168h'], 'MAX_FONT_GLYPH_SIZE': 256, 'ADDITIONAL_TEXT_LINES_FOR_PEBBLE_H': [], 'MAX_APP_BINARY_SIZE': 65536, 'MAX_RESOURCES_SIZE': 1048576, 'MAX_APP_MEMORY_SIZE': 65536, 'MAX_WORKER_MEMORY_SIZE': 10240, 'NAME': 'diorite', 'BUNDLE_BIN_DIR': 'diorite', 'BUILD_DIR': 'diorite', 'MAX_RESOURCES_SIZE_APPSTORE': 262144, 'DEFINES': ['PBL_PLATFORM_DIORITE', 'PBL_BW', 'PBL_RECT', 'PBL_MICROPHONE', 'PBL_HEALTH', 'PBL_SMARTSTRAP', 'PBL_DISPLAY_WIDTH=144', 'PBL_DISPLAY_HEIGHT=168']}
 PLATFORM_NAME = 'diorite'
 PREFIX = '/usr/local'
-PROJECT_INFO = {'appKeys': {'ControlKeyResetRequest': 1, 'ControlKeyUnsupportedError': 4, 'ControlKeyChunk': 3, 'ControlKeyResetComplete': 2}, u'sdkVersion': u'3', u'projectType': u'rocky', u'uuid': u'cb71373f-404b-4b23-81ac-45c1ef16c8e7', 'messageKeys': {'ControlKeyResetRequest': 1, 'ControlKeyUnsupportedError': 4, 'ControlKeyChunk': 3, 'ControlKeyResetComplete': 2}, 'companyName': u'MainFrame', u'enableMultiJS': True, u'watchapp': {u'watchface': True}, 'versionLabel': u'2.0', 'longName': u'total-digital', u'displayName': u'total-digital', 'shortName': u'total-digital', u'resources': {u'media': []}, 'name': u'total-digital'}
+PROJECT_INFO = {'appKeys': {'ControlKeyResetRequest': 1, 'ControlKeyUnsupportedError': 4, 'ControlKeyChunk': 3, 'ControlKeyResetComplete': 2}, u'sdkVersion': u'3', u'projectType': u'rocky', u'uuid': u'cb71373f-404b-4b23-81ac-45c1ef16c8e7', 'messageKeys': {'ControlKeyResetRequest': 1, 'ControlKeyUnsupportedError': 4, 'ControlKeyChunk': 3, 'ControlKeyResetComplete': 2}, 'companyName': u'MainFrame', u'enableMultiJS': True, u'watchapp': {u'watchface': True}, u'capabilities': [u'configurable'], 'versionLabel': u'2.0', 'longName': u'total-digital', u'displayName': u'total-digital', 'shortName': u'total-digital', u'resources': {u'media': []}, 'name': u'total-digital'}
 REQUESTED_PLATFORMS = []
 RESOURCES_JSON = []
 RPATH_ST = '-Wl,-rpath,%s'
@@ -62,7 +62,7 @@ STLIB_MARKER = None
 STLIB_ST = '-l%s'
 SUPPORTED_PLATFORMS = ['basalt', 'emery', 'diorite', 'chalk']
 TARGET_PLATFORMS = ['emery', 'diorite', 'chalk', 'basalt']
-TIMESTAMP = 1725214478
+TIMESTAMP = 1725215817
 USE_GROUPS = True
 VERBOSE = 0
 WEBPACK = '/home/rebble/.pebble-sdk/SDKs/current/node_modules/.bin/webpack'
