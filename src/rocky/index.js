@@ -188,7 +188,7 @@ rocky.on('draw', function(event) {
   // draw colon and minutes
   p_x += numberwidth + gap;
   // crazy colon math to center the colon dots in their respective cell rows
-  drawColon(ctx, p_x, p_y + (hig + str) / 2 - dia + spa, str, hig + str + 2 * (spa - dia), dia, col1);
+  drawColon(ctx, p_x, p_y, str, hig, dia, spa, col1);
   p_x += colonwidth + gap
   drawNumber(ctx, minutes[0], p_x, p_y, str, len, hig, dia, spa, num3);
   p_x += numberwidth + gap;
@@ -197,7 +197,7 @@ rocky.on('draw', function(event) {
   // handle seconds if requested
   if (drawseconds) {
     p_x += numberwidth + gap;
-    drawColon(ctx, p_x, p_y + (hig + str) / 2 - dia + spa, str, hig + str + 2 * (spa - dia), dia, col2);
+    drawColon(ctx, p_x, p_y, str, hig, dia, spa, col2);
     p_x += colonwidth + gap
     drawNumber(ctx, seconds[0], p_x, p_y, str, len, hig, dia, spa, num5);
     p_x += numberwidth + gap;
@@ -315,10 +315,20 @@ function drawNumber(ctx, val, x, y, stroke, width, height, diagonal, spacing, co
 *   diagonal: the block  distnace cut into each corner
 *   color: the color of the colon
 */
-function drawColon(ctx, x, y, stroke, height, diagonal, color) {
+function drawColon(ctx, x, y, stroke, height, diagonal, spacing, color) {
+  // shift down to first colon position
+  y = y + Math.ceil((height + stroke) / 2) - diagonal + spacing;
+  shift = height + str + 2 * (spa - dia) - 1;
+
+  // handle diagonals reaching out of their cells
+  if (stroke - diagonal + spacing < 0) {
+    y = y - stroke + diagonal - spacing;
+    shift = shift + (diagonal + spacing)
+  }
+
   ctx.fillStyle = color;
   drawCell(ctx, x, y, stroke, stroke, diagonal);
-  drawCell(ctx, x, y + height, stroke, stroke, diagonal);
+  drawCell(ctx, x, y + shift, stroke, stroke, diagonal);
 }
 
 
@@ -369,10 +379,6 @@ function colonWidth(stroke) {
 
 // Borrowed from Clay.js
 
-/**
- * @param {string|boolean|number} color
- * @returns {string}
- */
 function cssColor(color) {
   if (typeof color === 'number') {
     color = color.toString(16);
@@ -385,10 +391,6 @@ function cssColor(color) {
   return '#' + color;
 }
 
-/**
- * @param {string} color
- * @return {string}
- */
 function padColorString(color) {
   color = color.toLowerCase();
 
