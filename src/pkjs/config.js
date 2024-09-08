@@ -18,54 +18,63 @@ module.exports = [
         "type": "color",
         "messageKey": "BackgroundColor",
         "defaultValue": "0x000000",
+        "allowGray": true,
         "label": "Background Color"
       },
       {
         "type": "color",
-        "messageKey": "1Hour",
+        "messageKey": "Hour1",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "First Hour Color"
       },
       {
         "type": "color",
-        "messageKey": "2Hour",
+        "messageKey": "Hour2",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "Second Hour Color"
       },
       {
         "type": "color",
-        "messageKey": "1Colon",
+        "messageKey": "Colon1",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "First Colon Color"
       },
       {
         "type": "color",
-        "messageKey": "1Minute",
+        "messageKey": "Minute1",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "First Minute Color"
       },
       {
         "type": "color",
-        "messageKey": "2Minute",
+        "messageKey": "Minute2",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "Second Minute Color"
       },
       {
         "type": "color",
-        "messageKey": "2Colon",
+        "messageKey": "Colon2",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "Second Colon Color"
       },
       {
         "type": "color",
-        "messageKey": "1Second",
+        "messageKey": "Second1",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "First Second Color"
       },
       {
         "type": "color",
-        "messageKey": "2Second",
+        "messageKey": "Second2",
         "defaultValue": "0xFFFFFF",
+        "allowGray": true,
         "label": "Second Second Color"
       }
     ]
@@ -79,8 +88,28 @@ module.exports = [
       },
       {
         "type": "slider",
+        "messageKey": "width",
+        "defaultValue": 100,
+        "label": "Horizontal Cell Width",
+        "description": "The width of each horizontal cell",
+        "min": 1,
+        "max": 100,
+        "step": 1
+      },
+      {
+        "type": "slider",
+        "messageKey": "height",
+        "defaultValue": 100,
+        "label": "Vertical Cell Height",
+        "description": "The height of each vertical cell",
+        "min": 1,
+        "max": 150,
+        "step": 1
+      },
+      {
+        "type": "slider",
         "messageKey": "stroke",
-        "defaultValue": 5,
+        "defaultValue": 6,
         "label": "Line Width",
         "description": "The thickness of each individual cell. Set equal to width and height for square-ish shapes",
         "min": 1,
@@ -100,31 +129,11 @@ module.exports = [
       {
         "type": "slider",
         "messageKey": "spacing",
-        "defaultValue": 2,
+        "defaultValue": -5,
         "label": "Cell Spacing",
         "description": "The space in between each cell in a number. Set negative for overlaps",
         "min": -50,
         "max": 50,
-        "step": 1
-      },
-      {
-        "type": "slider",
-        "messageKey": "width",
-        "defaultValue": 15,
-        "label": "Horizontal Cell Width",
-        "description": "The width of each horizontal cell",
-        "min": 1,
-        "max": 100,
-        "step": 1
-      },
-      {
-        "type": "slider",
-        "messageKey": "height",
-        "defaultValue": 15,
-        "label": "Vertical Cell Height",
-        "description": "The height of each vertical cell",
-        "min": 1,
-        "max": 150,
         "step": 1
       },
       {
@@ -140,7 +149,7 @@ module.exports = [
       {
         "type": "slider",
         "messageKey": "xborder",
-        "defaultValue": 5,
+        "defaultValue": 4,
         "label": "Horizontal Border",
         "description": "The width of the border on the left and right sides of the display",
         "min": -50,
@@ -150,7 +159,7 @@ module.exports = [
       {
         "type": "slider",
         "messageKey": "yborder",
-        "defaultValue": 5,
+        "defaultValue": 40,
         "label": "Vertical Border",
         "description": "The height of border on the top and bottom sides of the display",
         "min": -100,
@@ -173,18 +182,18 @@ module.exports = [
         "options": [
           {
             "label": "Left",
-            "value": "left"
+            "value": 'left'
           },
           {
             "label": "Center",
-            "value": "center"
+            "value": 'center'
           },
           {
             "label": "Right",
-            "value": "right"
+            "value": 'right'
           },
         ],
-        "defaultValue": "center"
+        "defaultValue": 'center'
       },
       {
         "type": "radiogroup",
@@ -193,18 +202,18 @@ module.exports = [
         "options": [
           {
             "label": "Top",
-            "value": "top"
+            "value": 'top'
           },
           {
             "label": "Center",
-            "value": "center"
+            "value": 'center'
           },
           {
             "label": "Bottom",
-            "value": "bottom"
+            "value": 'bottom'
           },
         ],
-        "defaultValue": "center"
+        "defaultValue": 'center'
       },
       {
         "type": "toggle",

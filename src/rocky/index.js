@@ -3,15 +3,6 @@ var rocky = require('rocky');
 
 var settings = null;
 
-// aplite - pebble - 
-// basalt - time - 144x168 (2px border)
-// chalk - time round -   (circular, border?)
-// diorite - pebble 2 - 144x168
-// emery - time 2 - (2px border)
-
-// don't let spacing get too negative (> -stroke)
-// probably don't let length or hight go negative at all, probably won't be good (>0)
-
 // val, x, y, stroke, width, height, diagonal, spacing
 // drawNumber(ctx, 2, 1,   1,  4,  25, 30, 6,  -5);     // gothic
 // drawNumber(ctx, 2, 31,  1,  14, 14, 14, 6,  -1);     // diamond
@@ -24,34 +15,14 @@ var settings = null;
 // drawNumber(ctx, 2, 91,  50, 6,  16, 16, 0,  -3);     // pixel smooth
 // drawNumber(ctx, 2, 121, 50, 5,  21, 21, 5,  0);      // stellated
 
-// var diagonal = 2;
-// var length = 50;
-// var hight = 30;
-// var stroke = 8;
-// var space = -5;
-// var gapth = 2;
-// var border_x = 5;
-// var border_y = 25;
-
-// var num1 = 'purple';
-// var num2 = 'orange';
-// var num3 = 'green';
-// var num4 = 'cyan';
-// var num5 = 'blue';
-// var num6 = 'magenta';
-// var col1 = 'grey';
-// var col2 = 'red';
-// var bac = 'white';
-
-// OG SIMPLE DIGITAL
-var diagonal = 3;
-var length = 15;
-var hight = 15;
-var stroke = 7;
-var space = 0;
-var gapth = 3;
-var border_x = 5;
-var border_y = 5;
+var dia = 1;
+var len = 100;
+var hig = 100;
+var str = 6;
+var spa = -5;
+var gap = 4;
+var box = 4;
+var boy = 40;
 
 var num1 = 'white';
 var num2 = 'white';
@@ -63,35 +34,40 @@ var col1 = 'white';
 var col2 = 'white';
 var bac = 'black';
 
-var drawseconds = false;
+var drawseconds = true;
 var squish_x = true;
 var squish_y = true;
 var y_just = 'center';
 var x_just = 'center';
 
-
 rocky.on('draw', function(event) {
   // import settings
-  var dia = diagonal;
-  var len = length;
-  var hig = hight;
-  var str = stroke;
-  var spa = space;
-  var gap = gapth;
-  var box = border_x;
-  var boy = border_y;
+  if(settings) {
+    dia = settings.diagonal;
+    len = settings.width;
+    hig = settings.height;
+    str = settings.stroke;
+    spa = settings.spacing;
+    gap = settings.gap;
+    box = settings.xborder;
+    boy = settings.yborder;
 
-  // if(settings) {
-  //   dia = settings.diagonal;
-  //   len = length;
-  //   hig = hight;
-  //   str = stroke;
-  //   spa = space;
-  //   gap = gapth;
-  //   box = border_x;
-  //   boy = border_y;
-  //   // complete this later
-  // }
+    num1 = cssColor(settings.Hour1);
+    num2 = cssColor(settings.Hour2);
+    num3 = cssColor(settings.Minute1);
+    num4 = cssColor(settings.Minute2);
+    num5 = cssColor(settings.Second1);
+    num6 = cssColor(settings.Second2);
+    col1 = cssColor(settings.Colon1);
+    col2 = cssColor(settings.Colon2);
+    bac = cssColor(settings.BackgroundColor);
+
+    squish_x = settings.xSquish;
+    squish_y = settings.ySquish;
+    y_just = settings.yJustify;
+    x_just = settings.xJustify;
+    drawseconds = settings.seconds;
+  }
 
   // get time information
   var time = new Date().toLocaleTimeString().split(":");
@@ -227,6 +203,9 @@ rocky.on('draw', function(event) {
     p_x += numberwidth + gap;
     drawNumber(ctx, seconds[1], p_x, p_y, str, len, hig, dia, spa, num6);
   }
+
+  // quality of life: if connection is lost, we only do minutes
+  drawseconds = false;
   });
 
 
@@ -386,4 +365,36 @@ function numberHeight(stroke, height, diagonal, spacing) {
 */
 function colonWidth(stroke) {
   return stroke;
+}
+
+// Borrowed from Clay.js
+
+/**
+ * @param {string|boolean|number} color
+ * @returns {string}
+ */
+function cssColor(color) {
+  if (typeof color === 'number') {
+    color = color.toString(16);
+  } else if (!color) {
+    return 'transparent';
+  }
+
+  color = padColorString(color);
+
+  return '#' + color;
+}
+
+/**
+ * @param {string} color
+ * @return {string}
+ */
+function padColorString(color) {
+  color = color.toLowerCase();
+
+  while (color.length < 6) {
+    color = '0' + color;
+  }
+
+  return color;
 }
