@@ -1,3 +1,6 @@
+// This is a reference file to my old implementation that was in Javascript.
+// We've moved over to C but this is all still super useful
+
 // gotta have it
 var rocky = require('rocky');
 
