@@ -1,5 +1,4 @@
 # Total Digital
-This is a digital watchface for the Pebble (Rebble) smartwatch. It's based on Simple Digital, a simple 7 segment watchface I designed back in 2017, but is fully customizable.
 
 # Screenshots
 ![pebble_screenshot_2024-09-08_13-01-28](https://github.com/user-attachments/assets/b108e2f1-a37c-40b9-8a2c-e90cf6e51f77)
