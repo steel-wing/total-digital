@@ -1,6 +1,8 @@
 # Total Digital
+This is the maxxed out version of my Simple Digital watchface, with full customization built into the code from the beginning. The watchface simulates a 7-segment display, but with total control over the dimensions of the cells, the spacings between them, and the spacings and coloring of individual digits. The time can be centered, justified left, up, right, or down, or even programmed to dynamically remain within certain distances of the borders of the screen (overriding other spacing and thickness parameters if so). 
+All screenshots shown below are different possibilities from the watchface: the same code is being used to render all of them.
 
-# Screenshots
+## Screenshots
 ![pebble_screenshot_2024-09-08_13-01-28](https://github.com/user-attachments/assets/b108e2f1-a37c-40b9-8a2c-e90cf6e51f77)
 ![pebble_screenshot_2024-09-08_13-06-06](https://github.com/user-attachments/assets/6d9ad1c1-b908-43aa-9bf7-89fe82e38c94)
 ![pebble_screenshot_2024-09-08_14-00-22](https://github.com/user-attachments/assets/16f3923e-2035-44b0-8c9c-24c4dc950723)
@@ -21,5 +23,5 @@
 ![pebble_screenshot_2024-09-08_14-05-59](https://github.com/user-attachments/assets/3d8dd0de-e314-4ec3-b671-1d4e1b82a5c8)
 
 
-# Segment Design
-As a starting point for the 7 segment display, I first designed a system for making a single cell (representative of an individual cell in a standard LCD display). I decided to go with a stretched octagon as the shape, with all parameters being exact integers that stretch, cut, or extend the bounds of the cell.
+## Current Development
+Currently, the code for this watchface is written entirely in Javascript, which is very, very far from ideal for customization, as Rocky only really works with C. C development for this watchface is ongoing (3-2025)
