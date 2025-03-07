@@ -1,5 +1,5 @@
 # Total Digital
-This is the maxxed out version of my Simple Digital watchface, with full customization built into the code from the beginning. The watchface simulates a 7-segment display, but with total control over the dimensions of the cells, the spacings between them, and the spacings and coloring of individual digits. The time can be centered, justified left, up, right, or down, or even programmed to dynamically remain within certain distances of the borders of the screen (overriding other spacing and thickness parameters if so). 
+This is the maxxed out version of my [Simple Digital](https://github.com/steel-wing/simple-digital) watchface, with full customization built into the code from the beginning. The watchface simulates a 7-segment display, but with total control over the dimensions of the cells, the spacings between them, and the spacings and coloring of individual digits. The time can be centered, justified left, up, right, or down, or even programmed to dynamically remain within certain distances of the borders of the screen (overriding other spacing and thickness parameters if so). 
 All screenshots shown below are different possibilities from the watchface: the same code is being used to render all of them.
 
 ## Screenshots
