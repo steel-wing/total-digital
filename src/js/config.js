@@ -16,63 +16,63 @@ module.exports = [
       },
       {
         "type": "color",
-        "messageKey": "BackgroundColor",
+        "messageKey": "background_color",
         "defaultValue": "0x000000",
         "allowGray": true,
         "label": "Background Color"
       },
       {
         "type": "color",
-        "messageKey": "Hour1",
+        "messageKey": "hour_one_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "First Hour Color"
       },
       {
         "type": "color",
-        "messageKey": "Hour2",
+        "messageKey": "hour_two_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "Second Hour Color"
       },
       {
         "type": "color",
-        "messageKey": "Colon1",
+        "messageKey": "colon_one_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "First Colon Color"
       },
       {
         "type": "color",
-        "messageKey": "Minute1",
+        "messageKey": "minute_one_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "First Minute Color"
       },
       {
         "type": "color",
-        "messageKey": "Minute2",
+        "messageKey": "minute_two_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "Second Minute Color"
       },
       {
         "type": "color",
-        "messageKey": "Colon2",
+        "messageKey": "colon_two_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "Second Colon Color"
       },
       {
         "type": "color",
-        "messageKey": "Second1",
+        "messageKey": "second_one_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "First Second Color"
       },
       {
         "type": "color",
-        "messageKey": "Second2",
+        "messageKey": "second_two_color",
         "defaultValue": "0xFFFFFF",
         "allowGray": true,
         "label": "Second Second Color"
@@ -177,54 +177,54 @@ module.exports = [
       },
       {
         "type": "radiogroup",
-        "messageKey": "xJustify",
+        "messageKey": "xjustify",
         "label": "Horizontal Justification",
         "options": [
           {
             "label": "Left",
-            "value": 'left'
+            "value": 'l'
           },
           {
             "label": "Center",
-            "value": 'center'
+            "value": 'c'
           },
           {
             "label": "Right",
-            "value": 'right'
+            "value": 'r'
           },
         ],
-        "defaultValue": 'center'
+        "defaultValue": 'c'
       },
       {
         "type": "radiogroup",
-        "messageKey": "yJustify",
+        "messageKey": "yjustify",
         "label": "Vertical Justification",
         "options": [
           {
             "label": "Top",
-            "value": 'top'
+            "value": 't'
           },
           {
             "label": "Center",
-            "value": 'center'
+            "value": 'c'
           },
           {
             "label": "Bottom",
-            "value": 'bottom'
+            "value": 'b'
           },
         ],
-        "defaultValue": 'center'
+        "defaultValue": 'c'
       },
       {
         "type": "toggle",
-        "messageKey": "xSquish",
+        "messageKey": "xsquish",
         "label": "Dynamically Resize Width",
         "defaultValue": true,
         "description": "This makes your numbers skinnier in the event of the clockface exceeding the horizontal border (10:00 is wider than 1:00)"
       },
       {
         "type": "toggle",
-        "messageKey": "ySquish",
+        "messageKey": "ysquish",
         "label": "Dynamically Resize Height",
         "defaultValue": true,
         "description": "This makes your numbers shorter in the event of the clockface exceeding the bounds selected above (in the case of a timeline event)"
@@ -237,6 +237,37 @@ module.exports = [
         "description": "Dynamically resizing width is recommended"
       }
     ]
+  },
+  {
+      "type": "section",
+      "items": [
+          {
+              "type": "heading",
+              "defaultValue": "Alternate Design Toggles",
+          },
+          {
+              "type": "text",
+              "defaultValue": "These are some alternate versions of the font.\nJust a stylistic choice."
+          },
+          {
+              "type": "toggle",
+              "messageKey": "six_tail",
+              "defaultValue": true,
+              "label": "Tail Above 6",
+          },
+          {
+              "type": "toggle",
+              "messageKey": "seven_tail",
+              "defaultValue": false,
+              "label": "Tail Left of 7",
+          },
+          {
+              "type": "toggle",
+              "messageKey": "nine_tail",
+              "defaultValue": true,
+              "label": "Tail Below 9",
+          },
+      ],
   },
   {
     "type": "submit",

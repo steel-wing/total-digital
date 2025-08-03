@@ -1,24 +1,73 @@
 {
-  "name": "total-digital",
-  "author": "MainFrame",
-  "version": "2.0.0",
-  "keywords": ["pebble-app"],
-  "private": true,
-  "dependencies": {},
-  "pebble": {
-    "displayName": "total-digital",
-    "uuid": "cb71373f-404b-4b23-81ac-45c1ef16c8e7",
-    "projectType": "rocky",
-    "sdkVersion": "3",
-    "enableMultiJS": true,
-    "watchapp": {
-      "watchface": true
-    },
-    "resources": {
-      "media": []
-    },
-    "capabilities": [
-      "configurable"
-    ]
-  }
+    "name": "total-digital",
+    "author": "MainFrame",
+    "version": "2.1",
+    "keywords": [
+		"pebble-watchface",
+		"simple",
+		"repebble",
+		"digital",
+		"configurable",
+        "colors",
+        "settings"
+	],
+    "private": true,
+	"dependencies": {
+		"pebble-clay": "^1.0.4"
+	},
+    "pebble": {
+        "displayName": "Total Digital",
+        "uuid": "cb71373f-404b-4b23-81ac-45c1ef16c8e7",
+        "sdkVersion": "3",
+        "enableMultiJS": true,
+        "targetPlatforms": [
+			"aplite",
+			"basalt",
+			"chalk",
+			"diorite",
+			"emery"
+		],
+        "watchapp": {
+            "watchface": true
+        },		
+        "resources": {
+			"media": [
+				{
+					"file": "images/MenuImage.png",
+					"menuIcon": true,
+					"name": "IMAGE_MENU_IMAGE",
+					"storageFormat": "png",
+					"targetPlatforms": null,
+					"type": "bitmap"
+				}
+			]
+		},
+        "messageKeys": [
+            "background_color",
+            "hour_one_color",
+            "hour_two_color",
+            "colon_one_color",
+            "minute_one_color",
+            "minute_two_color",
+            "colon_two_color",
+            "second_one_color",
+            "second_two_color",
+            "width",
+            "height",
+            "stroke",
+            "diagonal",
+            "spacing",
+            "gap",
+            "xborder",
+            "yborder",
+            "xjustify",
+            "yjustify",
+            "xsquish",
+            "ysquish",
+            "seconds"
+        ],
+        "capabilities": [
+            "configurable"
+        ]
+    }
 }

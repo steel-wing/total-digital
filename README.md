@@ -21,7 +21,3 @@ All screenshots shown below are different possibilities from the watchface: the 
 ![pebble_screenshot_2024-09-08_14-11-17](https://github.com/user-attachments/assets/ea6f2179-ef1d-4835-b9ab-151c7647ee59)
 ![pebble_screenshot_2024-09-08_14-09-46](https://github.com/user-attachments/assets/3c4667cd-d483-462b-b750-0e2ca9127d83)
 ![pebble_screenshot_2024-09-08_14-05-59](https://github.com/user-attachments/assets/3d8dd0de-e314-4ec3-b671-1d4e1b82a5c8)
-
-
-## Current Development
-Currently, the code for this watchface is written entirely in Javascript, which is very, very far from ideal for customization, as Rocky only really works with C. C development for this watchface is ongoing (3-2025)
