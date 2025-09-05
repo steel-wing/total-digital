@@ -122,7 +122,7 @@ module.exports = [
         "defaultValue": 1,
         "label": "Diagonal Inset",
         "description": "The amount of corner inset on the edges of the cell. Set to 0 for rectangles or set to greater than stroke for funky stuff",
-        "min": -50,
+        "min": -10,
         "max": 50,
         "step": 1
       },
@@ -152,7 +152,7 @@ module.exports = [
         "defaultValue": 4,
         "label": "Horizontal Border",
         "description": "The width of the border on the left and right sides of the display",
-        "min": -50,
+        "min": 0,
         "max": 50,
         "step": 1
       },
@@ -162,7 +162,7 @@ module.exports = [
         "defaultValue": 40,
         "label": "Vertical Border",
         "description": "The height of border on the top and bottom sides of the display",
-        "min": -100,
+        "min": 0,
         "max": 100,
         "step": 1
       }
@@ -179,41 +179,41 @@ module.exports = [
         "type": "radiogroup",
         "messageKey": "xjustify",
         "label": "Horizontal Justification",
+        "defaultValue": "1",
         "options": [
           {
             "label": "Left",
-            "value": 'l'
+            "value": "0"
           },
           {
             "label": "Center",
-            "value": 'c'
+            "value": "1"
           },
           {
             "label": "Right",
-            "value": 'r'
+            "value": "2"
           },
-        ],
-        "defaultValue": 'c'
+        ]
       },
       {
         "type": "radiogroup",
         "messageKey": "yjustify",
         "label": "Vertical Justification",
+        "defaultValue": "1",
         "options": [
           {
             "label": "Top",
-            "value": 't'
+            "value": "0"
           },
           {
             "label": "Center",
-            "value": 'c'
+            "value": "1"
           },
           {
             "label": "Bottom",
-            "value": 'b'
+            "value": "2"
           },
-        ],
-        "defaultValue": 'c'
+        ]
       },
       {
         "type": "toggle",

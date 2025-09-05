@@ -8,6 +8,8 @@
 		"repebble",
 		"digital",
 		"configurable",
+        "hackathon",
+        "hackathon2",
         "colors",
         "settings"
 	],
@@ -18,9 +20,9 @@
     "pebble": {
         "displayName": "Total Digital",
         "uuid": "cb71373f-404b-4b23-81ac-45c1ef16c8e7",
-        "sdkVersion": "3",
-        "enableMultiJS": true,
-        "targetPlatforms": [
+		"sdkVersion": "3",
+		"enableMultiJS": true,
+		"targetPlatforms": [
 			"aplite",
 			"basalt",
 			"chalk",
@@ -64,7 +66,10 @@
             "yjustify",
             "xsquish",
             "ysquish",
-            "seconds"
+            "seconds",
+            "six_tail",
+            "seven_tail",
+            "nine_tail"
         ],
         "capabilities": [
             "configurable"
